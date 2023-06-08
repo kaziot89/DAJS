@@ -17,7 +17,7 @@ function addProduct() {
 }
 
 function editPrices() {
-  console.log("Prices edited");
+  window.location.href = "/addProduct/addProduct.html";
 }
 
 function showSavedLists() {

@@ -4,7 +4,54 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="addProduct.css" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <div id="mainContainer">
+      <div id="name">
+        <label for="prodName">Nazwa :</label>
+        <input type="text" id="prodName" name="prodName" />
+      </div>
+      <div id="pricePerKgParagraph">Cena/kg:</div>
+
+      <div id="pricesContainer">
+        <div class="shopContainer">
+          <label for="shop1">sklep 1</label>
+          <input
+            type="number"
+            inputmode="numeric"
+            pattern="^[0-9]+(\.[0-9]{1,2})?$"
+            id="shop1"
+            name="shop1"
+          />
+        </div>
+        <div class="shopContainer">
+          <label for="shop2">sklep 2</label>
+          <input
+            type="number"
+            inputmode="numeric"
+            pattern="^[0-9]+(\.[0-9]{1,2})?$"
+            id="shop2"
+            name="shop2"
+          />
+        </div>
+        <div class="shopContainer">
+          <label for="shop3">sklep 3</label>
+          <input
+            type="number"
+            inputmode="numeric"
+            pattern="^[0-9]+(\.[0-9]{1,2})?$"
+            id="shop3"
+            name="shop3"
+          />
+        </div>
+      </div>
+    </div>
+    <div id="buttons">
+      <button id="save">zapisz</button>
+      <button id="back">powrót</button>
+    </div>
+    <script src="addProduct.js"></script>
+  </body>
 </html>
