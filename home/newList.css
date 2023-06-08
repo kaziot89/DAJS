@@ -1,0 +1,156 @@
+* {
+  margin: 0;
+
+  /* box-sizing: border-box; */
+}
+@font-face {
+  font-family: simpsons;
+  src: url(../Simpson/Simpsonfont.ttf) format("truetype");
+}
+body {
+  display: flex;
+  flex-wrap: wrap;
+}
+.alphabet {
+  margin: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  row-gap: 10px;
+  width: 100%;
+  min-width: 900px;
+  max-width: 1300px;
+  height: 5vh;
+  margin: 25px auto;
+  /* border: 5px solid red; */
+}
+#mainContainer {
+  display: flex;
+  width: 100%;
+  /* border: solid 5px black; */
+  justify-content: space-between;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.letterButton {
+  flex-grow: 1;
+  min-width: 30px;
+  max-width: 50px;
+  min-height: 30px;
+  max-height: 50px;
+  width: 100%;
+  aspect-ratio: 1/1;
+  margin: 0 5px;
+  font-family: "simpsons";
+  font-size: 120%;
+
+  background-color: #f8d62d;
+  border-radius: 10px;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+}
+.productsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+  min-height: 500px;
+  width: 20%;
+}
+.productButton {
+  width: 80%;
+  min-width: 150px;
+  max-width: 200px;
+  min-height: 20px;
+  max-height: 60px;
+  flex-grow: 1;
+  margin: 0 5px;
+  font-family: "simpsons";
+  font-size: 140%;
+
+  background-color: #f8d62d;
+  border-radius: 10px;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+}
+
+.productsList {
+  display: flex;
+  flex-wrap: nowrap;
+  /* background-color: #f8d62d; */
+  border-radius: 10px;
+  flex-grow: 1;
+  height: 80vh;
+  max-width: 500px;
+  min-width: 340px;
+  border: 2px solid black;
+  margin: 0 50px 0 0;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+}
+
+#nameContainer {
+  flex-grow: 1;
+  margin: 20px 10px 20px 20px;
+  background-color: white;
+  border-radius: 10px;
+  /* border: 2px solid black; */
+}
+#quantityContainer {
+  min-width: 50px;
+  margin: 20px 20px 20px 10px;
+  background-color: white;
+  border-radius: 10px;
+  /* border: solid 2px rgb(0, 0, 0); */
+}
+#shoppingListContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  max-width: 500px;
+  margin: 0 5px 0 0;
+}
+
+.shoppingList {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+  /* background-color: #f8d62d; */
+  border-radius: 10px;
+  /* height: 80%; */
+  min-width: 340px;
+  border: 2px solid black;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+}
+.newListButtons {
+  flex-grow: 1;
+  margin: 15px 0 0 auto;
+  width: 250px;
+  max-height: 60px;
+  font-family: "simpsons";
+  font-size: 140%;
+  background-color: #f8d62d;
+  border-radius: 10px;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+}
+#homer {
+  position: absolute;
+  bottom: 0;
+  left: -150px;
+  width: 600px;
+  z-index: -1;
+  background-color: transparent;
+}
+#donut {
+  position: absolute;
+  top: 300px;
+  left: 100px;
+  z-index: -1;
+  width: 100px;
+}
+#donut1 {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  z-index: -1;
+  width: 100px;
+}
+#donut2 {
+}

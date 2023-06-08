@@ -5,7 +5,7 @@ $saveProduct.addEventListener("click", add);
 $goBack.addEventListener("click", ret);
 
 function ret() {
-  window.location.href = "../home/index.html";
+  window.location.href = "index.html";
 }
 function add() {
   //yyyyy//

@@ -51,6 +51,7 @@ input {
   font-family: arial;
   font-size: 24px;
   border-radius: 10px;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
 }
 .shopContainer input {
   width: 100px;
@@ -74,5 +75,5 @@ button {
   font-size: 170%;
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(111, 111, 111);
-  margin: 10px 40px 10px 0;
+  margin: 10px 0 10px 0;
 }
