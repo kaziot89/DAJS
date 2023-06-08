@@ -4,8 +4,11 @@
 }
 
 body {
+  height: 100vh;
   background-image: url("../1367084.jpg");
   background-size: cover;
+  background-position: bottom right;
+  background-repeat: no-repeat;
 }
 
 .container {
@@ -31,4 +34,37 @@ button {
   font-size: 170%;
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  opacity: 0;
+  /* visibility: hidden; */
+  animation-name: slideIn;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+
+  /* animation: slideIn 2s ease-in-out;  */
+}
+#make_l {
+  animation-delay: 1s; /* Opóźnienie 1 sekundy */
+}
+
+#add_p {
+  animation-delay: 1.25s; /* Opóźnienie 1.25 sekundy */
+}
+
+#edit_p {
+  animation-delay: 1.3s; /* Opóźnienie 1.5 sekundy */
+}
+
+#saved_l {
+  animation-delay: 1.4s; /* Opóźnienie 1.75 sekundy */
+}
+@keyframes slideIn {
+  0% {
+    opacity: 1; /* Początkowa niewidoczność */
+    transform: translateY(2000%); /* Początkowa pozycja poza widokiem */
+  }
+  100% {
+    opacity: 1; /* Końcowa widoczność */
+    transform: translateY(0); /* Końcowa pozycja */
+  }
 }

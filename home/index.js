@@ -25,6 +25,10 @@ function editPrices() {
 function showSavedLists() {
   console.log("Saved lists shown");
 }
+window.addEventListener("DOMContentLoaded", () => {
+  const buttons = document.querySelectorAll(".button");
+  buttons.forEach((button) => button.classList.add("visible"));
+});
 //ADD PRODUCT STUFF/ Not Working
 // const $saveProduct = document.getElementById("save");
 // const $goBack = document.getElementById("back");
