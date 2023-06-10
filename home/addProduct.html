@@ -16,7 +16,7 @@
       <div id="pricePerKgParagraph">Cena/kg:</div>
 
       <div id="pricesContainer">
-        <div class="shopContainer">
+        <div class="shopContainer" id="shopContainer1">
           <label for="shop1">sklep 1</label>
           <input
             type="number"
@@ -26,7 +26,7 @@
             name="shop1"
           />
         </div>
-        <div class="shopContainer">
+        <div class="shopContainer" id="shopContainer2">
           <label for="shop2">sklep 2</label>
           <input
             type="number"
@@ -36,7 +36,7 @@
             name="shop2"
           />
         </div>
-        <div class="shopContainer">
+        <div class="shopContainer" id="shopContainer3">
           <label for="shop3">sklep 3</label>
           <input
             type="number"
@@ -52,6 +52,14 @@
       <button id="save">Dodaj</button>
       <button id="back">Wstecz</button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"
+      integrity="sha512-n7swEtVCvXpQ7KxgpPyp0+DQQEf5vPpmzCRl14x2sp2v5LpCYCjrAx03mkBAbWwGF9eUoIk8YVcDFuJRIeYttg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/DAJS/home/sql.js"></script>
     <script src="addProduct.js"></script>
   </body>
 </html>

@@ -1,5 +1,3 @@
-//
-
 const $makeListButton = document.getElementById("make_l");
 const $addProductButton = document.getElementById("add_p");
 const $editPricesButton = document.getElementById("edit_p");
