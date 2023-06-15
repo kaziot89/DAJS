@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "sqlite3": "^5.1.6"
+    "firebase": "^9.22.2"
   }
 }
