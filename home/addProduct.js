@@ -1,21 +1,25 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-
+//************************ E-MAIL AND PASSWORD ******************/
+// FIREBASE AND G-MAIL
+// DonutAppJs - gmail.com
+// DAJSDAJS - password
+//***************************************************************/
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA6Zdxa3qzO7ajpAGrmPoEhUKNafZk0aC8",
-  authDomain: "dajs-3305a.firebaseapp.com",
+  apiKey: "AIzaSyCbDhDiJsCSPGt4a30j5rQRQUjPmaxEZ_M",
+  authDomain: "donutappjs-dcc83.firebaseapp.com",
   databaseURL:
-    "https://dajs-3305a-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "dajs-3305a",
-  storageBucket: "dajs-3305a.appspot.com",
-  messagingSenderId: "612494531179",
-  appId: "1:612494531179:web:6f019de1900a608d162f2e",
-  measurementId: "G-PFEWSEME51",
+    "https://donutappjs-dcc83-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "donutappjs-dcc83",
+  storageBucket: "donutappjs-dcc83.appspot.com",
+  messagingSenderId: "107684649248",
+  appId: "1:107684649248:web:1f0e5d69a2165cf86b9f45",
+  measurementId: "G-P2DWVH99KP",
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -30,11 +34,6 @@ import {
   remove,
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-// let name = document.getElementById("prodName");
-// let price1 = document.getElementById("shop1");
-// let price2 = document.getElementById("shop2");
-// let price3 = document.getElementById("shop3");
-
 let saveBtn = document.getElementById("save");
 let returnBtn = document.getElementById("back");
 
@@ -42,7 +41,7 @@ const db = getDatabase();
 const productsRef = ref(db, "products/");
 
 function add() {
-  let name = document.getElementById("prodName").value;
+  let name = document.getElementById("prodName").value.toLowerCase();
   let price1 = document.getElementById("shop1").value;
   let price2 = document.getElementById("shop2").value;
   let price3 = document.getElementById("shop3").value;
@@ -52,17 +51,18 @@ function add() {
     const newProductId = newProductRef.key;
 
     const productData = {
-      Product_name: name,
+      AAProduct_name: name,
       Makro: price1 !== "" ? price1 : null,
-
       Farutex: price2 !== "" ? price2 : null,
       Kuchnie_świata: price3 !== "" ? price3 : null,
     };
 
     set(ref(db, `products/${name}`), productData);
-    alert("Dodałeś produkt do bazy danych.");
+    alert(`Dodałeś "${name}" do bazy danych.`);
+    let allInputs = document.querySelectorAll("input");
+    allInputs.forEach((singleInput) => (singleInput.value = ""));
   } else {
-    console.log("Please fill in the name and provide only one price.");
+    alert("Wprowadź nazwę produktu oraz cenę w przynajmniej jednym sklepie.");
   }
 }
 
