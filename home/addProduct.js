@@ -67,4 +67,7 @@ function add() {
 }
 
 saveBtn.addEventListener("click", add);
-returnBtn = addEventListener("click", function () {});
+
+returnBtn = addEventListener("click", function back() {
+  this.window.location = "index.html";
+});
