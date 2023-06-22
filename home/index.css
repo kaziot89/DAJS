@@ -44,19 +44,19 @@ button {
   /* animation: slideIn 2s ease-in-out;  */
 }
 #make_l {
-  animation-delay: 1s; /* Opóźnienie 1 sekundy */
+  animation-delay: 0.5s; /* Opóźnienie 1 sekundy */
 }
 
 #add_p {
-  animation-delay: 1.25s; /* Opóźnienie 1.25 sekundy */
+  animation-delay: 0.75s; /* Opóźnienie 1.25 sekundy */
 }
 
 #edit_p {
-  animation-delay: 1.3s; /* Opóźnienie 1.5 sekundy */
+  animation-delay: 0.8s; /* Opóźnienie 1.5 sekundy */
 }
 
 #saved_l {
-  animation-delay: 1.4s; /* Opóźnienie 1.75 sekundy */
+  animation-delay: 0.9s; /* Opóźnienie 1.75 sekundy */
 }
 @keyframes slideIn {
   0% {

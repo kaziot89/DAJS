@@ -35,16 +35,19 @@ get(dataRef)
 
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
+  const counterContainer = document.getElementById("nameContainer2");
   let html = "";
 
-  // Iterate through the retrieved data and build the HTML content
+  // Create an object to keep track of the item counts
+  const itemCounts = {};
 
+  // Iterate through the retrieved data and build the HTML content
   let counter = 1;
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       const item = data[key];
       if (item.AAProduct_name) {
-        html += `<div id="${counter}" style="margin: 5px; border-bottom: solid 1px lightgrey; display: flex; justify-content: space-between "><span style=" " >${item.AAProduct_name}</span><div id="buttons"><button id="minus" style=" background-color: pink; border-radius: 5px; width: 30px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button><button id="plus-${counter}" style=" background-color: pink; border-radius: 5px; width: 30px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button></div></div>`;
+        html += `<div id="${counter}" style="margin: 5px; border-bottom: solid 1px lightgrey; display: flex; justify-content: space-between "><span id="item-${key}" style=" " >${item.AAProduct_name}</span><div id="buttons"><button id="minus-${counter}" style=" background-color: pink; border-radius: 5px; width: 30px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button><button id="plus-${counter}" style=" background-color: pink; border-radius: 5px; width: 30px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button></div></div>`;
         counter++;
       }
     }
@@ -55,10 +58,27 @@ function displayData(data) {
 
   for (let i = 1; i < counter; i++) {
     const buttonPlus = document.getElementById(`plus-${i}`);
+    const buttonMinus = document.getElementById(`minus-${i}`);
+    const itemName = buttonPlus.getAttribute("data-key");
+
     buttonPlus.addEventListener("click", function () {
-      const key = buttonPlus.getAttribute("data-key");
-      document.getElementById("nameContainer2").innerHTML += `${key}`;
+      if (!itemCounts[itemName]) {
+        // If the item has not been added before, initialize the count to 1
+        itemCounts[itemName] = 1;
+        counterContainer.innerHTML += `<div>${itemName} ${itemCounts[itemName]}</div>`;
+      } else {
+        // If the item has been added before, increment the count by 1
+        itemCounts[itemName]++;
+        const lastAddedItem = counterContainer.lastElementChild;
+        lastAddedItem.innerHTML = `${itemName} ${itemCounts[itemName]}`;
+      }
     });
+
+    // buttonMinus.addEventListener("click", function () {
+    //   const key = buttonMinus.getAttribute("data-key");
+    //   const itemToRemove = document.getElementById(key);
+    //   itemToRemove.parentNode.removeChild(itemToRemove);
+    // });
   }
 }
 
