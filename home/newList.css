@@ -83,6 +83,22 @@ body {
   border: 2px solid black;
   margin: 0 50px 0 0;
   box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Stylowanie scrollbarów dla przeglądarek opartych na silniku WebKit, takich jak Chrome i Safari */
+.productsList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.productsList::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.productsList::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 #nameContainer {
@@ -106,6 +122,29 @@ body {
   flex-grow: 1;
   max-width: 500px;
   margin: 0 5px 0 0;
+}
+#nameContainer2,
+#nameContainer3,
+#nameContainer4 {
+  width: 33.3%;
+
+  /* flex-grow: 1; */
+  padding: 0 10px 20px 10px;
+  margin: 20px 0 20px 0;
+  background-color: white;
+  border-right: 1px solid lightgray;
+
+  /* border: 2px solid black; */
+}
+#nameContainer4 {
+  border-right: none;
+}
+.shopName {
+  font-size: 14px;
+  font-family: "simpsons";
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 .shoppingList {
@@ -151,4 +190,7 @@ body {
   left: 50px;
   z-index: -1;
   width: 100px;
+}
+.hidden {
+  visibility: v;
 }

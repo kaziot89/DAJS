@@ -13,11 +13,26 @@
         <label for="prodName">Nazwa :</label>
         <input type="text" id="prodName" name="prodName" />
       </div>
-      <div id="pricePerKgParagraph">Cena/kg:</div>
+
+      <div id="categoryContainer">
+        <div id="category">
+          <label for="categorySelector">Kategoria</label>
+          <select name="" id="categorySelector">
+            <option value="mięso">mięso</option>
+            <option value="warzywa">warzywa</option>
+            <option value="owoce">owoce</option>
+            <option value="nabiał">nabiał</option>
+            <option value="ryby">ryby</option>
+            <option value="przetwory">przetwory</option>
+            <option value="sypkie">sypkie</option>
+            <option value=""></option>
+          </select>
+        </div>
+      </div>
 
       <div id="pricesContainer">
         <div class="shopContainer" id="shopContainer1">
-          <label for="shop1">sklep 1</label>
+          <label for="shop1">Makro</label>
           <input
             type="number"
             inputmode="numeric"
@@ -27,7 +42,7 @@
           />
         </div>
         <div class="shopContainer" id="shopContainer2">
-          <label for="shop2">sklep 2</label>
+          <label for="shop2">Farutex</label>
           <input
             type="number"
             inputmode="numeric"
@@ -37,7 +52,7 @@
           />
         </div>
         <div class="shopContainer" id="shopContainer3">
-          <label for="shop3">sklep 3</label>
+          <label for="shop3">Kuchnie</label>
           <input
             type="number"
             inputmode="numeric"

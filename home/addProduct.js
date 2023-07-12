@@ -45,6 +45,9 @@ function add() {
   let price1 = document.getElementById("shop1").value;
   let price2 = document.getElementById("shop2").value;
   let price3 = document.getElementById("shop3").value;
+  let category = document
+    .getElementById("categorySelector")
+    .value.toLowerCase();
 
   if (name !== "" && (price1 !== "" || price2 !== "" || price3 !== "")) {
     const newProductRef = push(productsRef);
@@ -55,6 +58,7 @@ function add() {
       Makro: price1 !== "" ? price1 : null,
       Farutex: price2 !== "" ? price2 : null,
       Kuchnie_świata: price3 !== "" ? price3 : null,
+      Category: category,
     };
 
     set(ref(db, `products/${name}`), productData);
