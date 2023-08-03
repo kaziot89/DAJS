@@ -78,18 +78,25 @@ function displayData(data) {
     if (data.hasOwnProperty(key)) {
       const item = data[key];
       if (item.AAProduct_name) {
+        const itemName =
+          item.AAProduct_name.charAt(0).toUpperCase() +
+          item.AAProduct_name.slice(1);
         const { message, container } = getLowestPrice(item);
 
-        html += `<div id="${counter}" class="${item.Category}" style="margin: 5px; border-bottom: solid 1px lightgrey; display: flex; justify-content: space-between ">
-                <span id="item-${key}" " >${item.AAProduct_name}</span>
-                
-                <div id="buttons" style="display: flex; justify-content: right">
-                  <button id="minus-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
-                  <button id="plus-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
-                  <button id="plus5-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}">+5</button>
-                  <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
-                </div>
-              </div>`;
+        html += `<div id="${counter}" class="${
+          item.Category
+        }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
+                  <span id="item-${key}" style="width:60%; border-bottom: 1px lightgrey solid; font-family:arial; margin-bottom: 3px">
+                    <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
+                  </span>
+                  
+                  <div id="buttons" style="display: flex; justify-content: right">
+                    <button id="minus-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
+                    <button id="plus-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
+                    <button id="plus5-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}">+5</button>
+                    <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+                  </div>
+                </div>`;
         counter++;
       }
     }
@@ -177,13 +184,12 @@ function displayData(data) {
       itemName
     );
   }
+}
+const $returnHomeButton = document.getElementById("returnToHome");
+$returnHomeButton.addEventListener("click", returnToHome);
 
-  const $returnHomeButton = document.getElementById("returnToHome");
-  $returnHomeButton.addEventListener("click", returnToHome);
-
-  function returnToHome() {
-    window.location.href = "index.html";
-  }
+function returnToHome() {
+  window.location.href = "index.html";
 }
 
 const buttonAllProducts = document.getElementById("allProducts");

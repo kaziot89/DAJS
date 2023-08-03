@@ -38,7 +38,7 @@ body {
   min-height: 30px;
   max-height: 50px;
   width: 100%;
-  aspect-ratio: 1/1;
+  /* aspect-ratio: 1/1; */
   margin: 0 5px;
   font-family: "simpsons";
   font-size: 120%;
@@ -83,7 +83,7 @@ body {
   border: 2px solid black;
   margin: 0 50px 0 0;
   box-shadow: 15px 15px 20px rgb(111, 111, 111);
-  overflow: scroll;
+  overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
