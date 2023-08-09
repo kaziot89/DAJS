@@ -54,23 +54,28 @@ function displayData(data) {
     }
 
     if (lowestPriceIndex !== -1) {
+      const shopName = priceLabels[lowestPriceIndex];
       if (lowestPriceIndex === 0) {
         return {
           container: counterContainer1,
+          shopName: shopName,
         };
       } else if (lowestPriceIndex === 1) {
         return {
           container: counterContainer3,
+          shopName: shopName,
         };
       } else if (lowestPriceIndex === 2) {
         return {
           container: counterContainer2,
+          shopName: shopName,
         };
       }
     }
 
     return {
       container: null,
+      shopName: null,
     };
   }
 
@@ -125,6 +130,7 @@ function displayData(data) {
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
       }
+      updateSelectedProducts(itemName);
     });
 
     buttonPlus5.addEventListener("click", function () {
@@ -141,6 +147,7 @@ function displayData(data) {
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
       }
+      updateSelectedProducts(itemName);
     });
 
     buttonMinus.addEventListener("click", function () {
@@ -168,6 +175,35 @@ function displayData(data) {
       }
     });
   }
+  const selectedProducts = {
+    Farutex: [],
+    Makro: [],
+    Kuchnie_świata: [],
+  };
+
+  function updateSelectedProducts(itemName) {
+    const item = data[itemName];
+    const { container, shopName } = getLowestPrice(item);
+
+    if (shopName) {
+      if (itemCounts[itemName] === 0) {
+        // Remove the item from selectedProducts if its count is zero
+        const index = selectedProducts[shopName].indexOf(itemName);
+        if (index !== -1) {
+          selectedProducts[shopName].splice(index, 1);
+          // Clear the counter div if it exists
+          const counterToUpdate = document.getElementById(
+            `counter-${itemName}`
+          );
+          if (counterToUpdate) {
+            counterToUpdate.remove();
+          }
+        }
+      } else if (!selectedProducts[shopName].includes(itemName)) {
+        selectedProducts[shopName].push(itemName);
+      }
+    }
+  }
 
   for (let i = 1; i < counter; i++) {
     const buttonPlus = document.getElementById(`plus-${i}`);
@@ -184,6 +220,10 @@ function displayData(data) {
       itemName
     );
   }
+  const buttonSummary = document.getElementById("ListSummary");
+  buttonSummary.addEventListener("click", function () {
+    generateSummary(selectedProducts);
+  });
 }
 const $returnHomeButton = document.getElementById("returnToHome");
 $returnHomeButton.addEventListener("click", returnToHome);
@@ -196,6 +236,11 @@ const buttonAllProducts = document.getElementById("allProducts");
 const buttonMeat = document.getElementById("meat");
 const buttonVegetables = document.getElementById("vegetables");
 const buttonDairy = document.getElementById("dairy");
+const buttonFruits = document.getElementById("fruits");
+const buttonFish = document.getElementById("fish");
+const buttonPreserves = document.getElementById("preserves");
+const buttonLoose = document.getElementById("loose");
+const buttonSummary = document.getElementById("ListSummary");
 
 const toggleAll = function () {
   let container = document.getElementById("nameContainer");
@@ -251,10 +296,121 @@ const toggleVegetables = function () {
     }
   }
 };
+const toggleFruits = function () {
+  let container = document.getElementById("nameContainer");
+  let elements = container.children;
+
+  for (let i = 0; i < elements.length; i++) {
+    let element = elements[i];
+    if (!element.classList.contains("owoce")) {
+      element.style.display = "none";
+    } else {
+      element.style.display = "flex";
+    }
+  }
+};
+const toggleFish = function () {
+  let container = document.getElementById("nameContainer");
+  let elements = container.children;
+
+  for (let i = 0; i < elements.length; i++) {
+    let element = elements[i];
+    if (!element.classList.contains("ryby")) {
+      element.style.display = "none";
+    } else {
+      element.style.display = "flex";
+    }
+  }
+};
+const togglePreserves = function () {
+  let container = document.getElementById("nameContainer");
+  let elements = container.children;
+
+  for (let i = 0; i < elements.length; i++) {
+    let element = elements[i];
+    if (!element.classList.contains("przetwory")) {
+      element.style.display = "none";
+    } else {
+      element.style.display = "flex";
+    }
+  }
+};
+const toggleLoose = function () {
+  let container = document.getElementById("nameContainer");
+  let elements = container.children;
+
+  for (let i = 0; i < elements.length; i++) {
+    let element = elements[i];
+    if (!element.classList.contains("sypkie")) {
+      element.style.display = "none";
+    } else {
+      element.style.display = "flex";
+    }
+  }
+};
 buttonAllProducts.addEventListener("click", toggleAll);
 buttonMeat.addEventListener("click", toggleMeat);
 buttonVegetables.addEventListener("click", toggleVegetables);
 buttonDairy.addEventListener("click", toggleDairy);
+buttonFruits.addEventListener("click", toggleFruits);
+buttonFish.addEventListener("click", toggleFish);
+buttonPreserves.addEventListener("click", togglePreserves);
+buttonLoose.addEventListener("click", toggleLoose);
+
+function generateSummary(selectedProducts) {
+  const summaryContainer = document.getElementById("summaryContainer");
+  let summaryHtml = "<h2>Podsumowanie:</h2>";
+
+  const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
+
+  for (const shopName of shopOrder) {
+    const products = selectedProducts[shopName];
+    if (products.length > 0) {
+      summaryHtml += `<p><strong>${shopName}:</strong></p>`;
+      products.forEach((product) => {
+        summaryHtml += `<p>${product}</p>`;
+      });
+    }
+  }
+
+  if (summaryHtml === "<h2>Podsumowanie:</h2>") {
+    summaryHtml += "<p>Nic nie wybrałeś.</p>";
+  }
+
+  summaryContainer.innerHTML = summaryHtml;
+
+  // Clear the selectedProducts array to ensure only current selections are included
+  for (const shopName of shopOrder) {
+    selectedProducts[shopName] = [];
+  }
+}
+
+// function generateSummary(selectedProducts) {
+//   const summaryContainer = document.getElementById("summaryContainer");
+//   let summaryHtml = "<h2>Summary of Selected Products:</h2>";
+
+//   const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
+
+//   for (const shopName of shopOrder) {
+//     const products = selectedProducts[shopName];
+//     if (products.length > 0) {
+//       summaryHtml += `<p><strong>${shopName}:</strong></p>`;
+//       products.forEach((product) => {
+//         summaryHtml += `<p>${product}</p>`;
+//       });
+//     }
+//   }
+
+//   if (summaryHtml === "<h2>Summary of Selected Products:</h2>") {
+//     summaryHtml += "<p>No products selected.</p>";
+//   }
+
+//   summaryContainer.innerHTML = summaryHtml;
+// }
+
+// buttonSummary.addEventListener("click", function () {
+//   generateSummary(selectedProducts);
+// });
 
 // const buttonMeat = document.getElementById("meat");
 // const meat = function () {
