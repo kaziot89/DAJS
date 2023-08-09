@@ -358,7 +358,7 @@ buttonPreserves.addEventListener("click", togglePreserves);
 buttonLoose.addEventListener("click", toggleLoose);
 
 function generateSummary(selectedProducts) {
-  const summaryContainer = document.getElementById("summaryContainer");
+  // const summaryContainer = document.getElementById("summaryContainer");
   let summaryHtml = "<h2>Podsumowanie:</h2>";
 
   const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
@@ -376,13 +376,14 @@ function generateSummary(selectedProducts) {
   if (summaryHtml === "<h2>Podsumowanie:</h2>") {
     summaryHtml += "<p>Nic nie wybrałeś.</p>";
   }
-
-  summaryContainer.innerHTML = summaryHtml;
+  localStorage.setItem("summaryHtml", summaryHtml);
+  // summaryContainer.innerHTML = summaryHtml;
 
   // Clear the selectedProducts array to ensure only current selections are included
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
   }
+  window.location.href = "summaryPage.html";
 }
 
 // function generateSummary(selectedProducts) {
