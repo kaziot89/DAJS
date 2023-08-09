@@ -42,6 +42,7 @@ function displayData(data) {
   const priceContainer3 = document.getElementById("price_paragraph3");
   let html = "";
   let counter = 1;
+  let lowestPriceIndex = -1;
 
   function getLowestPrice(item) {
     const prices = [item.Farutex, item.Kuchnie_świata, item.Makro];
@@ -61,19 +62,22 @@ function displayData(data) {
       if (lowestPriceIndex === 0) {
         return {
           container: counterContainer1,
-          priceDisplay: priceContainer1,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
         };
       } else if (lowestPriceIndex === 1) {
         return {
           container: counterContainer3,
-          priceDisplay: priceContainer1,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
         };
       } else if (lowestPriceIndex === 2) {
         return {
           container: counterContainer2,
-          priceDisplay: priceContainer1,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
         };
       }
@@ -81,6 +85,8 @@ function displayData(data) {
 
     return {
       container: null,
+      lowestPrice: lowestPrice,
+      lowestPriceIndex: lowestPriceIndex,
       shopName: null,
     };
   }
@@ -97,15 +103,15 @@ function displayData(data) {
         html += `<div id="${counter}" class="${
           item.Category
         }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
-                  <span id="item-${key}" style="width:60%; border-bottom: 1px lightgrey solid; font-family:arial; margin-bottom: 3px">
+                  <span id="item-${key}" style="width:58%; border-bottom: 1px lightgrey solid; font-family:arial; margin-bottom: 3px">
                     <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
                   </span>
                   
                   <div id="buttons" style="display: flex; justify-content: right">
-                    <button id="minus-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
-                    <button id="plus-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
-                    <button id="plus5-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}">+5</button>
-                    <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:32px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+                    <button id="minus-${counter}" style="background-color: pink; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
+                    <button id="plus-${counter}" style="background-color: pink; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
+                    <button id="plus5-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px; " class="itemButton+" data-key="${key}">+5</button>
+                    <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
                   </div>
                 </div>`;
         counter++;
@@ -127,9 +133,15 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
-        const counterContainer = getLowestPrice(data[itemName]).container;
-        if (counterContainer) {
-          counterContainer.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+        const { container, lowestPrice } = getLowestPrice(data[itemName]);
+        if (container) {
+          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+        }
+
+        // Update the lowest price in the appropriate <span> element
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${lowestPrice} zł`;
         }
       } else {
         itemCounts[itemName]++;
@@ -210,6 +222,16 @@ function displayData(data) {
       }
     }
   }
+  function getLowestPriceElement(index) {
+    if (index === 0) {
+      return document.getElementById("price_paragraph1");
+    } else if (index === 1) {
+      return document.getElementById("price_paragraph2");
+    } else if (index === 2) {
+      return document.getElementById("price_paragraph3");
+    }
+    return null;
+  }
 
   for (let i = 1; i < counter; i++) {
     const buttonPlus = document.getElementById(`plus-${i}`);
@@ -231,6 +253,7 @@ function displayData(data) {
     generateSummary(selectedProducts);
   });
 }
+
 const $returnHomeButton = document.getElementById("returnToHome");
 $returnHomeButton.addEventListener("click", returnToHome);
 
@@ -418,49 +441,3 @@ function generateSummary(selectedProducts) {
 // buttonSummary.addEventListener("click", function () {
 //   generateSummary(selectedProducts);
 // });
-
-// const buttonMeat = document.getElementById("meat");
-// const meat = function () {
-//   let container = document.getElementById("nameContainer");
-//   let elementsToHide = container.querySelectorAll(":scope > :not(.mięso)");
-
-//   elementsToHide.forEach(function (element) {
-//     element.style.display = "none";
-//   });
-// };
-// buttonMeat.addEventListener("click", meat);
-
-// const buttonWegetables = document.getElementById("wegetables");
-// const wegetables = function () {
-//   let container = document.getElementById("nameContainer");
-//   let elementsToHide = container.querySelectorAll(":scope > :not(.warzywa)");
-
-//   elementsToHide.forEach(function (element) {
-//     element.style.display = "none";
-//   });
-// };
-// buttonWegetables.addEventListener("click", wegetables);
-
-//////////////////////////// nowe ale i tak nie diała dobrze //////////////
-// const buttonMeat = document.getElementById("meat");
-// const buttonWegetables = document.getElementById("wegetables");
-
-// const handleButtonClick = function (event) {
-//   const buttonId = event.target.id;
-//   let container = document.getElementById("nameContainer");
-//   let elementsToHide;
-
-//   if (buttonId === "meat") {
-//     elementsToHide = container.querySelectorAll(":scope > :not(.mięso)");
-//   } else if (buttonId === "wegetables") {
-//     elementsToHide = container.querySelectorAll(":scope > :not(.warzywa)");
-//   }
-
-//   elementsToHide.forEach(function (element) {
-//     element.style.display = "none";
-//   });
-// };
-
-// buttonMeat.addEventListener("click", handleButtonClick);
-// buttonWegetables.addEventListener("click", handleButtonClick);
-//////////////////////////////////////////////////////////////////////////////
