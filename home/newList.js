@@ -64,18 +64,21 @@ function displayData(data) {
           container: counterContainer1,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
         };
       } else if (lowestPriceIndex === 1) {
         return {
           container: counterContainer3,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
         };
       } else if (lowestPriceIndex === 2) {
         return {
           container: counterContainer2,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
         };
       }
     }
@@ -84,6 +87,7 @@ function displayData(data) {
       container: null,
       lowestPrice: lowestPrice,
       lowestPriceIndex: lowestPriceIndex,
+      shopName: null,
     };
   }
 
