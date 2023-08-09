@@ -37,6 +37,9 @@ function displayData(data) {
   const counterContainer1 = document.getElementById("nameContainer2");
   const counterContainer2 = document.getElementById("nameContainer3");
   const counterContainer3 = document.getElementById("nameContainer4");
+  const priceContainer1 = document.getElementById("price_paragraph1");
+  const priceContainer2 = document.getElementById("price_paragraph2");
+  const priceContainer3 = document.getElementById("price_paragraph3");
   let html = "";
   let counter = 1;
 
@@ -58,16 +61,19 @@ function displayData(data) {
       if (lowestPriceIndex === 0) {
         return {
           container: counterContainer1,
+          priceDisplay: priceContainer1,
           shopName: shopName,
         };
       } else if (lowestPriceIndex === 1) {
         return {
           container: counterContainer3,
+          priceDisplay: priceContainer1,
           shopName: shopName,
         };
       } else if (lowestPriceIndex === 2) {
         return {
           container: counterContainer2,
+          priceDisplay: priceContainer1,
           shopName: shopName,
         };
       }
