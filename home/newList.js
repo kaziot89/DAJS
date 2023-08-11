@@ -51,8 +51,8 @@ function displayData(data) {
     let lowestPriceIndex = -1;
 
     for (let i = 0; i < prices.length; i++) {
-      if (prices[i] !== undefined && prices[i] < lowestPrice) {
-        lowestPrice = prices[i];
+      if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
+        lowestPrice = parseFloat(prices[i]);
         lowestPriceIndex = i;
       }
     }
@@ -62,6 +62,7 @@ function displayData(data) {
       if (lowestPriceIndex === 0) {
         return {
           container: counterContainer1,
+          price: priceContainer1,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -69,6 +70,7 @@ function displayData(data) {
       } else if (lowestPriceIndex === 1) {
         return {
           container: counterContainer3,
+          price: priceContainer3,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -76,6 +78,7 @@ function displayData(data) {
       } else if (lowestPriceIndex === 2) {
         return {
           container: counterContainer2,
+          price: priceContainer2,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -133,9 +136,14 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
-        const { container, lowestPrice } = getLowestPrice(data[itemName]);
+        const { container, price, lowestPrice } = getLowestPrice(
+          data[itemName]
+        );
         if (container) {
           container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          price.innerHTML = lowestPrice; // pomonożyć przez iliść clicków;
+          console.log(typeof lowestPrice);
+          console.log(typeof counter);
         }
 
         // Update the lowest price in the appropriate <span> element
