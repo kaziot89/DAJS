@@ -53,61 +53,61 @@ function displayData(data) {
     for (let i = 0; i < prices.length; i++) {
       if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
         lowestPrice = parseFloat(prices[i]);
-      if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
-        lowestPrice = parseFloat(prices[i]);
-        lowestPriceIndex = i;
+        if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
+          lowestPrice = parseFloat(prices[i]);
+          lowestPriceIndex = i;
+        }
       }
+
+      if (lowestPriceIndex !== -1) {
+        const shopName = priceLabels[lowestPriceIndex];
+        if (lowestPriceIndex === 0) {
+          return {
+            container: counterContainer1,
+            price: priceContainer1,
+            lowestPrice: lowestPrice,
+            lowestPriceIndex: lowestPriceIndex,
+            shopName: shopName,
+          };
+        } else if (lowestPriceIndex === 1) {
+          return {
+            container: counterContainer3,
+            price: priceContainer3,
+            lowestPrice: lowestPrice,
+            lowestPriceIndex: lowestPriceIndex,
+            shopName: shopName,
+          };
+        } else if (lowestPriceIndex === 2) {
+          return {
+            container: counterContainer2,
+            price: priceContainer2,
+            lowestPrice: lowestPrice,
+            lowestPriceIndex: lowestPriceIndex,
+            shopName: shopName,
+          };
+        }
+      }
+
+      return {
+        container: null,
+        lowestPrice: lowestPrice,
+        lowestPriceIndex: lowestPriceIndex,
+        shopName: null,
+      };
     }
 
-    if (lowestPriceIndex !== -1) {
-      const shopName = priceLabels[lowestPriceIndex];
-      if (lowestPriceIndex === 0) {
-        return {
-          container: counterContainer1,
-          price: priceContainer1,
-          lowestPrice: lowestPrice,
-          lowestPriceIndex: lowestPriceIndex,
-          shopName: shopName,
-        };
-      } else if (lowestPriceIndex === 1) {
-        return {
-          container: counterContainer3,
-          price: priceContainer3,
-          lowestPrice: lowestPrice,
-          lowestPriceIndex: lowestPriceIndex,
-          shopName: shopName,
-        };
-      } else if (lowestPriceIndex === 2) {
-        return {
-          container: counterContainer2,
-          price: priceContainer2,
-          lowestPrice: lowestPrice,
-          lowestPriceIndex: lowestPriceIndex,
-          shopName: shopName,
-        };
-      }
-    }
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const item = data[key];
+        if (item.AAProduct_name) {
+          const itemName =
+            item.AAProduct_name.charAt(0).toUpperCase() +
+            item.AAProduct_name.slice(1);
+          const { message, container } = getLowestPrice(item);
 
-    return {
-      container: null,
-      lowestPrice: lowestPrice,
-      lowestPriceIndex: lowestPriceIndex,
-      shopName: null,
-    };
-  }
-
-  for (const key in data) {
-    if (data.hasOwnProperty(key)) {
-      const item = data[key];
-      if (item.AAProduct_name) {
-        const itemName =
-          item.AAProduct_name.charAt(0).toUpperCase() +
-          item.AAProduct_name.slice(1);
-        const { message, container } = getLowestPrice(item);
-
-        html += `<div id="${counter}" class="${
-          item.Category
-        }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
+          html += `<div id="${counter}" class="${
+            item.Category
+          }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
                   <span id="item-${key}" style="width:58%; border-bottom: 1px lightgrey solid; font-family:arial; margin-bottom: 3px">
                     <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
                   </span>
@@ -119,320 +119,329 @@ function displayData(data) {
                     <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
                   </div>
                 </div>`;
-        counter++;
+          counter++;
+        }
       }
     }
-  }
 
-  dataContainer.innerHTML = html;
+    dataContainer.innerHTML = html;
 
-  const itemCounts = {};
+    const itemCounts = {};
 
-  function addButtonListeners(
-    buttonPlus,
-    buttonPlus5,
-    buttonMinus,
-    buttonClear,
-    itemName
-  ) {
-    buttonPlus.addEventListener("click", function () {
-      if (!itemCounts[itemName]) {
-        itemCounts[itemName] = 1;
-        const { container, price, lowestPrice } = getLowestPrice(
-          data[itemName]
-        );
-        if (container) {
-          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
-          price.innerHTML += lowestPrice * itemCounts[itemName];
-        }
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
-      } else {
-        itemCounts[itemName]++;
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
-
-        // Update the price based on the new counter value
-        const { price, lowestPrice } = getLowestPrice(data[itemName]);
-        price.innerHTML = lowestPrice * itemCounts[itemName];
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
-      }
-      updateSelectedProducts(itemName);
-    });
-
-    buttonPlus5.addEventListener("click", function () {
-      if (!itemCounts[itemName]) {
-        // If the item has not been added before, initialize the count to 5
-        itemCounts[itemName] = 5;
-        const counterContainer = getLowestPrice(data[itemName]).container;
-        if (counterContainer) {
-          counterContainer.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
-        }
-      } else {
-        // If the item has been added before, increment the count by 5
-        itemCounts[itemName] += 5;
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
-      }
-      updateSelectedProducts(itemName);
-    });
-
-    buttonMinus.addEventListener("click", function () {
-      if (!itemCounts[itemName]) {
-        itemCounts[itemName] = 0;
-      }
-
-      if (itemCounts[itemName] > 0) {
-        itemCounts[itemName]--;
-
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
-        if (itemCounts[itemName] === 0) {
-          counterToUpdate.remove();
-        }
-      }
-    });
-
-    buttonClear.addEventListener("click", function () {
-      if (itemCounts[itemName] > 0) {
-        itemCounts[itemName] = 0;
-
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.remove();
-      }
-    });
-  }
-  const selectedProducts = {
-    Farutex: [],
-    Makro: [],
-    Kuchnie_świata: [],
-  };
-
-  function updateSelectedProducts(itemName) {
-    const item = data[itemName];
-    const { container, shopName } = getLowestPrice(item);
-
-    if (shopName) {
-      if (itemCounts[itemName] === 0) {
-        // Remove the item from selectedProducts if its count is zero
-        const index = selectedProducts[shopName].indexOf(itemName);
-        if (index !== -1) {
-          selectedProducts[shopName].splice(index, 1);
-          // Clear the counter div if it exists
-          const counterToUpdate = document.getElementById(
-            `counter-${itemName}`
-          );
-          if (counterToUpdate) {
-            counterToUpdate.remove();
-          }
-        }
-      } else if (!selectedProducts[shopName].includes(itemName)) {
-        selectedProducts[shopName].push(itemName);
-      }
-    }
-  }
-  function getLowestPriceElement(index) {
-    if (index === 0) {
-      return document.getElementById("price_paragraph1");
-    } else if (index === 1) {
-      return document.getElementById("price_paragraph2");
-    } else if (index === 2) {
-      return document.getElementById("price_paragraph3");
-    }
-    return null;
-  }
-
-  for (let i = 1; i < counter; i++) {
-    const buttonPlus = document.getElementById(`plus-${i}`);
-    const buttonPlus5 = document.getElementById(`plus5-${i}`);
-    const buttonMinus = document.getElementById(`minus-${i}`);
-    const buttonClear = document.getElementById(`clear-${i}`);
-    const itemName = buttonPlus.getAttribute("data-key");
-
-    addButtonListeners(
+    function addButtonListeners(
       buttonPlus,
       buttonPlus5,
       buttonMinus,
       buttonClear,
       itemName
-    );
-  }
-  const buttonSummary = document.getElementById("ListSummary");
-  buttonSummary.addEventListener("click", function () {
-    generateSummary(selectedProducts);
-  });
-}
+    ) {
+      buttonPlus.addEventListener("click", function () {
+        if (!itemCounts[itemName]) {
+          itemCounts[itemName] = 1;
+          const { container, price, lowestPrice } = getLowestPrice(
+            data[itemName]
+          );
+          if (container) {
+            container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+            price.innerHTML += lowestPrice * itemCounts[itemName];
+          }
 
-const $returnHomeButton = document.getElementById("returnToHome");
-$returnHomeButton.addEventListener("click", returnToHome);
+          // Update the lowest price in the appropriate <span> element
+          const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+          if (lowestPriceElement) {
+            lowestPriceElement.textContent = `${
+              lowestPrice * itemCounts[itemName]
+            } zł`; // Update the displayed value
+          }
+        } else {
+          itemCounts[itemName]++;
+          const counterToUpdate = document.getElementById(
+            `counter-${itemName}`
+          );
+          counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
 
-function returnToHome() {
-  window.location.href = "index.html";
-}
+          // Update the price based on the new counter value
+          const { price, lowestPrice } = getLowestPrice(data[itemName]);
+          price.innerHTML = lowestPrice * itemCounts[itemName];
 
-const buttonAllProducts = document.getElementById("allProducts");
-const buttonMeat = document.getElementById("meat");
-const buttonVegetables = document.getElementById("vegetables");
-const buttonDairy = document.getElementById("dairy");
-const buttonFruits = document.getElementById("fruits");
-const buttonFish = document.getElementById("fish");
-const buttonPreserves = document.getElementById("preserves");
-const buttonLoose = document.getElementById("loose");
-const buttonSummary = document.getElementById("ListSummary");
+          // Update the lowest price in the appropriate <span> element
+          const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+          if (lowestPriceElement) {
+            lowestPriceElement.textContent = `${
+              lowestPrice * itemCounts[itemName]
+            } zł`; // Update the displayed value
+          }
+        }
+        updateSelectedProducts(itemName);
+      });
 
-const toggleAll = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
+      buttonPlus5.addEventListener("click", function () {
+        if (!itemCounts[itemName]) {
+          // If the item has not been added before, initialize the count to 5
+          itemCounts[itemName] = 5;
+          const counterContainer = getLowestPrice(data[itemName]).container;
+          if (counterContainer) {
+            counterContainer.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          }
+        } else {
+          // If the item has been added before, increment the count by 5
+          itemCounts[itemName] += 5;
+          const counterToUpdate = document.getElementById(
+            `counter-${itemName}`
+          );
+          counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+        }
+        updateSelectedProducts(itemName);
+      });
 
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("fuck")) {
-      element.style.display = "flex";
-    } else {
-      element.style.display = "block";
-    }
-  }
-};
+      buttonMinus.addEventListener("click", function () {
+        if (!itemCounts[itemName]) {
+          itemCounts[itemName] = 0;
+        }
 
-const toggleMeat = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
+        if (itemCounts[itemName] > 0) {
+          itemCounts[itemName]--;
 
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("mięso")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
-const toggleDairy = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
+          const counterToUpdate = document.getElementById(
+            `counter-${itemName}`
+          );
+          counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+          if (itemCounts[itemName] === 0) {
+            counterToUpdate.remove();
+          }
+        }
+      });
 
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("nabiał")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
+      buttonClear.addEventListener("click", function () {
+        if (itemCounts[itemName] > 0) {
+          itemCounts[itemName] = 0;
 
-const toggleVegetables = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
-
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("warzywa")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
-const toggleFruits = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
-
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("owoce")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
-const toggleFish = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
-
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("ryby")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
-const togglePreserves = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
-
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("przetwory")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
-const toggleLoose = function () {
-  let container = document.getElementById("nameContainer");
-  let elements = container.children;
-
-  for (let i = 0; i < elements.length; i++) {
-    let element = elements[i];
-    if (!element.classList.contains("sypkie")) {
-      element.style.display = "none";
-    } else {
-      element.style.display = "flex";
-    }
-  }
-};
-buttonAllProducts.addEventListener("click", toggleAll);
-buttonMeat.addEventListener("click", toggleMeat);
-buttonVegetables.addEventListener("click", toggleVegetables);
-buttonDairy.addEventListener("click", toggleDairy);
-buttonFruits.addEventListener("click", toggleFruits);
-buttonFish.addEventListener("click", toggleFish);
-buttonPreserves.addEventListener("click", togglePreserves);
-buttonLoose.addEventListener("click", toggleLoose);
-
-function generateSummary(selectedProducts) {
-  // const summaryContainer = document.getElementById("summaryContainer");
-  let summaryHtml = "<h2>Podsumowanie:</h2>";
-
-  const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
-
-  for (const shopName of shopOrder) {
-    const products = selectedProducts[shopName];
-    if (products.length > 0) {
-      summaryHtml += `<p><strong>${shopName}:</strong></p>`;
-      products.forEach((product) => {
-        summaryHtml += `<p>${product}</p>`;
+          const counterToUpdate = document.getElementById(
+            `counter-${itemName}`
+          );
+          counterToUpdate.remove();
+        }
       });
     }
+    const selectedProducts = {
+      Farutex: [],
+      Makro: [],
+      Kuchnie_świata: [],
+    };
+
+    function updateSelectedProducts(itemName) {
+      const item = data[itemName];
+      const { container, shopName } = getLowestPrice(item);
+
+      if (shopName) {
+        if (itemCounts[itemName] === 0) {
+          // Remove the item from selectedProducts if its count is zero
+          const index = selectedProducts[shopName].indexOf(itemName);
+          if (index !== -1) {
+            selectedProducts[shopName].splice(index, 1);
+            // Clear the counter div if it exists
+            const counterToUpdate = document.getElementById(
+              `counter-${itemName}`
+            );
+            if (counterToUpdate) {
+              counterToUpdate.remove();
+            }
+          }
+        } else if (!selectedProducts[shopName].includes(itemName)) {
+          selectedProducts[shopName].push(itemName);
+        }
+      }
+    }
+    function getLowestPriceElement(index) {
+      if (index === 0) {
+        return document.getElementById("price_paragraph1");
+      } else if (index === 1) {
+        return document.getElementById("price_paragraph2");
+      } else if (index === 2) {
+        return document.getElementById("price_paragraph3");
+      }
+      return null;
+    }
+
+    for (let i = 1; i < counter; i++) {
+      const buttonPlus = document.getElementById(`plus-${i}`);
+      const buttonPlus5 = document.getElementById(`plus5-${i}`);
+      const buttonMinus = document.getElementById(`minus-${i}`);
+      const buttonClear = document.getElementById(`clear-${i}`);
+      const itemName = buttonPlus.getAttribute("data-key");
+
+      addButtonListeners(
+        buttonPlus,
+        buttonPlus5,
+        buttonMinus,
+        buttonClear,
+        itemName
+      );
+    }
+    const buttonSummary = document.getElementById("ListSummary");
+    buttonSummary.addEventListener("click", function () {
+      generateSummary(selectedProducts);
+    });
   }
 
-  if (summaryHtml === "<h2>Podsumowanie:</h2>") {
-    summaryHtml += "<p>Nic nie wybrałeś.</p>";
-  }
-  localStorage.setItem("summaryHtml", summaryHtml);
-  // summaryContainer.innerHTML = summaryHtml;
+  const $returnHomeButton = document.getElementById("returnToHome");
+  $returnHomeButton.addEventListener("click", returnToHome);
 
-  // Clear the selectedProducts array to ensure only current selections are included
-  for (const shopName of shopOrder) {
-    selectedProducts[shopName] = [];
+  function returnToHome() {
+    window.location.href = "index.html";
   }
-  window.location.href = "summaryPage.html";
+
+  const buttonAllProducts = document.getElementById("allProducts");
+  const buttonMeat = document.getElementById("meat");
+  const buttonVegetables = document.getElementById("vegetables");
+  const buttonDairy = document.getElementById("dairy");
+  const buttonFruits = document.getElementById("fruits");
+  const buttonFish = document.getElementById("fish");
+  const buttonPreserves = document.getElementById("preserves");
+  const buttonLoose = document.getElementById("loose");
+  const buttonSummary = document.getElementById("ListSummary");
+
+  const toggleAll = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("fuck")) {
+        element.style.display = "flex";
+      } else {
+        element.style.display = "block";
+      }
+    }
+  };
+
+  const toggleMeat = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("mięso")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+  const toggleDairy = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("nabiał")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+
+  const toggleVegetables = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("warzywa")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+  const toggleFruits = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("owoce")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+  const toggleFish = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("ryby")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+  const togglePreserves = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("przetwory")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+  const toggleLoose = function () {
+    let container = document.getElementById("nameContainer");
+    let elements = container.children;
+
+    for (let i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.classList.contains("sypkie")) {
+        element.style.display = "none";
+      } else {
+        element.style.display = "flex";
+      }
+    }
+  };
+  buttonAllProducts.addEventListener("click", toggleAll);
+  buttonMeat.addEventListener("click", toggleMeat);
+  buttonVegetables.addEventListener("click", toggleVegetables);
+  buttonDairy.addEventListener("click", toggleDairy);
+  buttonFruits.addEventListener("click", toggleFruits);
+  buttonFish.addEventListener("click", toggleFish);
+  buttonPreserves.addEventListener("click", togglePreserves);
+  buttonLoose.addEventListener("click", toggleLoose);
+
+  function generateSummary(selectedProducts) {
+    // const summaryContainer = document.getElementById("summaryContainer");
+    let summaryHtml = "<h2>Podsumowanie:</h2>";
+
+    const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
+
+    for (const shopName of shopOrder) {
+      const products = selectedProducts[shopName];
+      if (products.length > 0) {
+        summaryHtml += `<p><strong>${shopName}:</strong></p>`;
+        products.forEach((product) => {
+          summaryHtml += `<p>${product}</p>`;
+        });
+      }
+    }
+
+    if (summaryHtml === "<h2>Podsumowanie:</h2>") {
+      summaryHtml += "<p>Nic nie wybrałeś.</p>";
+    }
+    localStorage.setItem("summaryHtml", summaryHtml);
+    // summaryContainer.innerHTML = summaryHtml;
+
+    // Clear the selectedProducts array to ensure only current selections are included
+    for (const shopName of shopOrder) {
+      selectedProducts[shopName] = [];
+    }
+    window.location.href = "summaryPage.html";
+  }
 }
