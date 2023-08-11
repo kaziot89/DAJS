@@ -51,8 +51,8 @@ function displayData(data) {
     let lowestPriceIndex = -1;
 
     for (let i = 0; i < prices.length; i++) {
-      if (prices[i] !== undefined && prices[i] < lowestPrice) {
-        lowestPrice = prices[i];
+      if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
+        lowestPrice = parseFloat(prices[i]);
         lowestPriceIndex = i;
       }
     }
@@ -62,6 +62,7 @@ function displayData(data) {
       if (lowestPriceIndex === 0) {
         return {
           container: counterContainer1,
+          price: priceContainer1,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -69,6 +70,7 @@ function displayData(data) {
       } else if (lowestPriceIndex === 1) {
         return {
           container: counterContainer3,
+          price: priceContainer3,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -76,6 +78,7 @@ function displayData(data) {
       } else if (lowestPriceIndex === 2) {
         return {
           container: counterContainer2,
+          price: priceContainer2,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -133,20 +136,37 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
-        const { container, lowestPrice } = getLowestPrice(data[itemName]);
+        const { container, price, lowestPrice } = getLowestPrice(
+          data[itemName]
+        );
         if (container) {
           container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          price.innerHTML += lowestPrice * itemCounts[itemName];
         }
 
         // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${lowestPrice} zł`;
+          lowestPriceElement.textContent = `${
+            lowestPrice * itemCounts[itemName]
+          } zł`; // Update the displayed value
         }
       } else {
         itemCounts[itemName]++;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+
+        // Update the price based on the new counter value
+        const { price, lowestPrice } = getLowestPrice(data[itemName]);
+        price.innerHTML = lowestPrice * itemCounts[itemName];
+
+        // Update the lowest price in the appropriate <span> element
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${
+            lowestPrice * itemCounts[itemName]
+          } zł`; // Update the displayed value
+        }
       }
       updateSelectedProducts(itemName);
     });
@@ -414,30 +434,3 @@ function generateSummary(selectedProducts) {
   }
   window.location.href = "summaryPage.html";
 }
-
-// function generateSummary(selectedProducts) {
-//   const summaryContainer = document.getElementById("summaryContainer");
-//   let summaryHtml = "<h2>Summary of Selected Products:</h2>";
-
-//   const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
-
-//   for (const shopName of shopOrder) {
-//     const products = selectedProducts[shopName];
-//     if (products.length > 0) {
-//       summaryHtml += `<p><strong>${shopName}:</strong></p>`;
-//       products.forEach((product) => {
-//         summaryHtml += `<p>${product}</p>`;
-//       });
-//     }
-//   }
-
-//   if (summaryHtml === "<h2>Summary of Selected Products:</h2>") {
-//     summaryHtml += "<p>No products selected.</p>";
-//   }
-
-//   summaryContainer.innerHTML = summaryHtml;
-// }
-
-// buttonSummary.addEventListener("click", function () {
-//   generateSummary(selectedProducts);
-// });
