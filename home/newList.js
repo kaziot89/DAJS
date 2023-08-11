@@ -53,6 +53,8 @@ function displayData(data) {
     for (let i = 0; i < prices.length; i++) {
       if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
         lowestPrice = parseFloat(prices[i]);
+      if (prices[i] !== undefined && parseFloat(prices[i]) < lowestPrice) {
+        lowestPrice = parseFloat(prices[i]);
         lowestPriceIndex = i;
       }
     }
