@@ -1,0 +1,68 @@
+body {
+  background-image: url(../1312960.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.alphabet {
+  margin: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  row-gap: 10px;
+  width: 100%;
+  min-width: 900px;
+  max-width: 1300px;
+  height: 5vh;
+  margin: 25px auto;
+  /* border: 5px solid red; */
+}
+
+#mainContainer {
+  display: flex;
+  width: 100%;
+  /* border: solid 5px black; */
+  /* justify-content: space-between; */
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.productsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+  min-height: 500px;
+  /* width: 20%; */
+}
+#productsContainerList {
+  position: relative;
+  margin-left: 100px;
+  /* top: 50%;
+    transform: translateY(-50%);
+    left: 20%; */
+  width: 20%;
+  min-width: 500px;
+  border: solid 2px black;
+  border-radius: 10px;
+  height: 80vh;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  overflow: auto;
+}
+.productButton {
+  width: 70%;
+  min-width: 150px;
+  max-width: 200px;
+  min-height: 20px;
+  max-height: 48px;
+  flex-grow: 1;
+  margin: 0 5px;
+  font-family: "simpsons";
+  font-size: 140%;
+  background-color: #f8d62d;
+  border-radius: 10px;
+  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+}
+#productList {
+  padding: 10px 10px;
+}
+.button-success {
+  background-color: rgb(113, 209, 114);
+}

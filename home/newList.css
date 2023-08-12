@@ -33,22 +33,7 @@ body {
   max-width: 1300px;
   margin: 0 auto;
 }
-.letterButton {
-  flex-grow: 1;
-  min-width: 30px;
-  max-width: 50px;
-  min-height: 30px;
-  max-height: 50px;
-  width: 100%;
-  /* aspect-ratio: 1/1; */
-  margin: 0 5px;
-  font-family: "simpsons";
-  font-size: 120%;
 
-  background-color: #f8d62d;
-  border-radius: 10px;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
-}
 .productsContainer {
   display: flex;
   flex-direction: column;
@@ -67,7 +52,6 @@ body {
   margin: 0 5px;
   font-family: "simpsons";
   font-size: 140%;
-
   background-color: #f8d62d;
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(111, 111, 111);

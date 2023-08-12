@@ -141,32 +141,20 @@ function displayData(data) {
         );
         if (container) {
           container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
-          price.innerHTML += lowestPrice * itemCounts[itemName];
+          price.innerHTML = lowestPrice; // pomonożyć przez iliść clicków;
+          console.log(typeof lowestPrice);
+          console.log(typeof counter);
         }
 
         // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          lowestPriceElement.textContent = `${lowestPrice} zł`;
         }
       } else {
         itemCounts[itemName]++;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
-
-        // Update the price based on the new counter value
-        const { price, lowestPrice } = getLowestPrice(data[itemName]);
-        price.innerHTML = lowestPrice * itemCounts[itemName];
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
       }
       updateSelectedProducts(itemName);
     });
@@ -434,3 +422,30 @@ function generateSummary(selectedProducts) {
   }
   window.location.href = "summaryPage.html";
 }
+
+// function generateSummary(selectedProducts) {
+//   const summaryContainer = document.getElementById("summaryContainer");
+//   let summaryHtml = "<h2>Summary of Selected Products:</h2>";
+
+//   const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
+
+//   for (const shopName of shopOrder) {
+//     const products = selectedProducts[shopName];
+//     if (products.length > 0) {
+//       summaryHtml += `<p><strong>${shopName}:</strong></p>`;
+//       products.forEach((product) => {
+//         summaryHtml += `<p>${product}</p>`;
+//       });
+//     }
+//   }
+
+//   if (summaryHtml === "<h2>Summary of Selected Products:</h2>") {
+//     summaryHtml += "<p>No products selected.</p>";
+//   }
+
+//   summaryContainer.innerHTML = summaryHtml;
+// }
+
+// buttonSummary.addEventListener("click", function () {
+//   generateSummary(selectedProducts);
+// });
