@@ -31,6 +31,7 @@ get(dataRef)
   .catch((error) => {
     console.error("Error retrieving data:", error);
   });
+let totalSum = 0;
 
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
@@ -136,6 +137,7 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
+        console.log(itemCounts);
         const { container, price, lowestPrice } = getLowestPrice(
           data[itemName]
         );
@@ -175,6 +177,7 @@ function displayData(data) {
       if (!itemCounts[itemName]) {
         // If the item has not been added before, initialize the count to 1
         itemCounts[itemName] = 1 * 5;
+        console.log(itemCounts);
         const { container, price, lowestPrice } = getLowestPrice(
           data[itemName]
         );
@@ -210,6 +213,32 @@ function displayData(data) {
       }
       updateSelectedProducts(itemName);
     });
+
+    buttonClear.addEventListener("click", function () {
+      if (itemCounts[itemName] > 0) {
+        const counterToUpdate = document.getElementById(`counter-${itemName}`);
+        const { price, lowestPrice } = getLowestPrice(data[itemName]);
+
+        // Subtract the price of the cleared item from totalSum
+        totalSum -= lowestPrice * itemCounts[itemName];
+
+        itemCounts[itemName] = 0;
+        counterToUpdate.remove();
+
+        // Update the price and lowest price to reflect the cleared item
+        price.innerHTML = lowestPrice * itemCounts[itemName];
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${
+            lowestPrice * itemCounts[itemName]
+          } zł`; // Update the displayed value
+        }
+
+        updateSelectedProducts(itemName);
+        localStorage.removeItem("itemCounts");
+      }
+    });
+
     buttonMinus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 0;
@@ -237,38 +266,9 @@ function displayData(data) {
             lowestPrice * itemCounts[itemName]
           } zł`; // Update the displayed value
         }
-
         updateSelectedProducts(itemName);
       }
-    });
-
-    // buttonClear.addEventListener("click", function () {
-    //   if (itemCounts[itemName] > 0) {
-    //     itemCounts[itemName] = 0;
-
-    //     const counterToUpdate = document.getElementById(`counter-${itemName}`);
-    //     counterToUpdate.remove();
-    //   }
-    // });
-    buttonClear.addEventListener("click", function () {
-      if (itemCounts[itemName] > 0) {
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        const { price, lowestPrice } = getLowestPrice(data[itemName]);
-
-        itemCounts[itemName] = 0;
-        counterToUpdate.remove();
-
-        // Update the price and lowest price to reflect the cleared item
-        price.innerHTML = lowestPrice * itemCounts[itemName];
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
-
-        updateSelectedProducts(itemName);
-      }
+      localStorage.removeItem("itemCounts");
     });
   }
   const selectedProducts = {
@@ -294,12 +294,45 @@ function displayData(data) {
           if (counterToUpdate) {
             counterToUpdate.remove();
           }
+          // Update the totalSum by subtracting the price of the removed item
+          const { lowestPrice } = getLowestPrice(item);
+          totalSum -= lowestPrice * itemCounts[itemName];
         }
       } else if (!selectedProducts[shopName].includes(itemName)) {
         selectedProducts[shopName].push(itemName);
+        // Update the totalSum by adding the price of the selected item
+        const { lowestPrice } = getLowestPrice(item);
+        totalSum += lowestPrice * itemCounts[itemName];
       }
     }
   }
+
+  // function updateSelectedProducts(itemName) {
+  //   const item = data[itemName];
+  //   const { container, shopName } = getLowestPrice(item);
+
+  //   if (shopName) {
+  //     if (itemCounts[itemName] === 0) {
+  //       // Remove the item from selectedProducts if its count is zero
+  //       const index = selectedProducts[shopName].indexOf(itemName);
+  //       if (index !== -1) {
+  //         selectedProducts[shopName].splice(index, 1);
+  //         // Clear the counter div if it exists
+  //         const counterToUpdate = document.getElementById(
+  //           `counter-${itemName}`
+  //         );
+  //         if (counterToUpdate) {
+  //           counterToUpdate.remove();
+  //         }
+  //       }
+  //     } else if (!selectedProducts[shopName].includes(itemName)) {
+  //       selectedProducts[shopName].push(itemName);
+  //       // Update the totalSum by adding the price of the selected item
+  //       const { lowestPrice } = getLowestPrice(item);
+  //       totalSum += lowestPrice * itemCounts[itemName];
+  //     }
+  //   }}
+
   function getLowestPriceElement(index) {
     if (index === 0) {
       return document.getElementById("price_paragraph1");
@@ -483,6 +516,23 @@ function generateSummary(selectedProducts) {
   if (summaryHtml === "<h2>Podsumowanie:</h2>") {
     summaryHtml += "<p>Nic nie wybrałeś.</p>";
   }
+
+  summaryHtml += `<p><strong>Razem: ${totalSum.toFixed(2)} zł</strong></p>`;
+  localStorage.setItem("summaryHtml", summaryHtml);
+  ///////////////////????????????????????????????????????/////////////////////////////////
+  /*for (const shopName of shopOrder) {
+    selectedProducts[shopName] = [];
+  } */
+  /////////////////////////////////////////////////////////////////////////////
+  localStorage.removeItem("itemCounts");
+  window.location.href = "summaryPage.html";
+}
+
+/*
+
+  if (summaryHtml === "<h2>Podsumowanie:</h2>") {
+    summaryHtml += "<p>Nic nie wybrałeś.</p>";
+  }
   localStorage.setItem("summaryHtml", summaryHtml);
   // summaryContainer.innerHTML = summaryHtml;
 
@@ -492,3 +542,4 @@ function generateSummary(selectedProducts) {
   }
   window.location.href = "summaryPage.html";
 }
+*/
