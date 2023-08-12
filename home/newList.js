@@ -154,8 +154,7 @@ function displayData(data) {
           } zł`; // Update the displayed value
         }
       } else {
-        // If the item has been added before, increment the count by 5
-        itemCounts[itemName] += 5;
+        itemCounts[itemName]++;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
 
@@ -176,18 +175,43 @@ function displayData(data) {
 
     buttonPlus5.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
-        // If the item has not been added before, initialize the count to 5
-        itemCounts[itemName] = 5;
-        const counterContainer = getLowestPrice(data[itemName]).container;
-        if (counterContainer) {
-          counterContainer.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+        // If the item has not been added before, initialize the count to 1
+        itemCounts[itemName] = 1 * 5;
+        console.log(itemCounts);
+        const { container, price, lowestPrice } = getLowestPrice(
+          data[itemName]
+        );
+        if (container) {
+          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          price.innerHTML += lowestPrice * itemCounts[itemName];
+        }
+
+        // Update the lowest price in the appropriate <span> element
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${
+            lowestPrice * itemCounts[itemName]
+          } zł`; // Update the displayed value
         }
       } else {
         // If the item has been added before, increment the count by 5
         itemCounts[itemName] += 5;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+
+        // Update the price based on the new counter value
+        const { price, lowestPrice } = getLowestPrice(data[itemName]);
+        price.innerHTML = lowestPrice * itemCounts[itemName];
+
+        // Update the lowest price in the appropriate <span> element
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${
+            lowestPrice * itemCounts[itemName]
+          } zł`; // Update the displayed value
+        }
       }
+      updateSelectedProducts(itemName);
     });
 
     buttonClear.addEventListener("click", function () {
@@ -518,3 +542,4 @@ function generateSummary(selectedProducts) {
   }
   window.location.href = "summaryPage.html";
 }
+*/

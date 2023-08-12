@@ -35,9 +35,6 @@ body {
 #productsContainerList {
   position: relative;
   margin-left: 100px;
-  /* top: 50%;
-    transform: translateY(-50%);
-    left: 20%; */
   width: 20%;
   min-width: 500px;
   border: solid 2px black;
