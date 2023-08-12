@@ -31,6 +31,7 @@ body {
   /* border: solid 5px black; */
   justify-content: space-between;
   max-width: 1300px;
+  max-height: 70%;
   margin: 0 auto;
 }
 

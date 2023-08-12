@@ -137,3 +137,133 @@ function handleSaveButtonClick(key, event) {
       // ... (similar code for error handling)
     });
 }
+const $returnHomeButton = document.getElementById("returnBtn");
+$returnHomeButton.addEventListener("click", returnToHome);
+
+function returnToHome() {
+  window.location.href = "index.html";
+}
+// DO ZROBIENIA BUTTONY KATEGORII
+// const buttonAllProducts = document.getElementById("allProducts");
+// const buttonMeat = document.getElementById("meat");
+// const buttonVegetables = document.getElementById("vegetables");
+// const buttonDairy = document.getElementById("dairy");
+// const buttonFruits = document.getElementById("fruits");
+// const buttonFish = document.getElementById("fish");
+// const buttonPreserves = document.getElementById("preserves");
+// const buttonLoose = document.getElementById("loose");
+
+// const toggleAll = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("fuck")) {
+//       element.style.display = "flex";
+//     } else {
+//       element.style.display = "block";
+//     }
+//   }
+// };
+
+// const toggleMeat = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("mięso")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+// const toggleDairy = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("nabiał")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+
+// const toggleVegetables = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("warzywa")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+// const toggleFruits = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("owoce")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+// const toggleFish = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("ryby")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+// const togglePreserves = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("przetwory")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+// const toggleLoose = function () {
+//   let container = document.getElementById("nameContainer");
+//   let elements = container.children;
+
+//   for (let i = 0; i < elements.length; i++) {
+//     let element = elements[i];
+//     if (!element.classList.contains("sypkie")) {
+//       element.style.display = "none";
+//     } else {
+//       element.style.display = "flex";
+//     }
+//   }
+// };
+// buttonAllProducts.addEventListener("click", toggleAll);
+// buttonMeat.addEventListener("click", toggleMeat);
+// buttonVegetables.addEventListener("click", toggleVegetables);
+// buttonDairy.addEventListener("click", toggleDairy);
+// buttonFruits.addEventListener("click", toggleFruits);
+// buttonFish.addEventListener("click", toggleFish);
+// buttonPreserves.addEventListener("click", togglePreserves);
+// buttonLoose.addEventListener("click", toggleLoose);
