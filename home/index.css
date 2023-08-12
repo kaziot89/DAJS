@@ -27,7 +27,7 @@ button {
   background-color: transparent;
   height: 12%;
   min-height: 50px;
-  width: 100%;
+  width: 90%;
   min-width: 250px;
   background-color: #f8d62d;
   font-family: "simpsons";
@@ -35,36 +35,34 @@ button {
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(111, 111, 111);
   opacity: 0;
-  /* visibility: hidden; */
   animation-name: slideIn;
   animation-duration: 0.8s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-
-  /* animation: slideIn 2s ease-in-out;  */
 }
+
 #make_l {
-  animation-delay: 0.5s; /* Opóźnienie 1 sekundy */
+  animation-delay: 0.5s;
 }
 
 #add_p {
-  animation-delay: 0.75s; /* Opóźnienie 1.25 sekundy */
+  animation-delay: 0.75s;
 }
 
 #edit_p {
-  animation-delay: 0.8s; /* Opóźnienie 1.5 sekundy */
+  animation-delay: 0.8s;
 }
 
 #saved_l {
-  animation-delay: 0.9s; /* Opóźnienie 1.75 sekundy */
+  animation-delay: 0.9s;
 }
 @keyframes slideIn {
   0% {
-    opacity: 1; /* Początkowa niewidoczność */
-    transform: translateY(2000%); /* Początkowa pozycja poza widokiem */
+    opacity: 1;
+    transform: translateY(2000%);
   }
   100% {
-    opacity: 1; /* Końcowa widoczność */
-    transform: translateY(0); /* Końcowa pozycja */
+    opacity: 1;
+    transform: translateY(0);
   }
 }

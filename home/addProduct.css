@@ -6,7 +6,7 @@ html {
   min-width: 1500px;
 }
 body {
-  background-image: url("../newListBgi.jpg");
+  background-image: url("../wallpaper.jpg");
   background-size: cover;
   min-width: 1250px;
 }
@@ -68,7 +68,6 @@ select {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* align-items: flex-end; */
   height: 200px;
   margin-right: 100px;
 }
@@ -84,4 +83,8 @@ button {
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(0, 0, 0);
   margin: 10px 0 10px 0;
+  transition: all 0.1s ease-in-out;
+}
+button:hover {
+  transform: scale(1.05);
 }

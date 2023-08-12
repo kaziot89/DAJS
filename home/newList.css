@@ -1,13 +1,14 @@
 * {
   margin: 0;
-
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
 }
 @font-face {
   font-family: simpsons;
   src: url(../Simpson/Simpsonfont.ttf) format("truetype");
 }
 body {
+  background-image: url(../wallpaper.jpg);
+  background-size: cover;
   display: flex;
   flex-wrap: wrap;
   max-width: 1200px;
@@ -23,12 +24,11 @@ body {
   max-width: 1300px;
   height: 5vh;
   margin: 25px auto;
-  /* border: 5px solid red; */
 }
 #mainContainer {
   display: flex;
   width: 100%;
-  /* border: solid 5px black; */
+
   justify-content: space-between;
   max-width: 1300px;
   max-height: 70%;
@@ -41,7 +41,6 @@ body {
   justify-content: space-between;
   height: 80vh;
   min-height: 500px;
-  /* width: 20%; */
 }
 .productButton {
   width: 70%;
@@ -55,27 +54,29 @@ body {
   font-size: 140%;
   background-color: #f8d62d;
   border-radius: 10px;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  box-shadow: 15px 15px 20px rgb(80, 80, 80);
+  transition: all 0.1s ease-in-out;
 }
-
+.productButton:hover {
+  transform: scale(1.15);
+}
 .productsList {
   display: flex;
   flex-wrap: nowrap;
-  /* background-color: #f8d62d; */
   border-radius: 10px;
   flex-grow: 1;
   height: 80vh;
   max-width: 350px;
   min-width: 340px;
   border: 2px solid black;
+  background-color: #fffefe;
   margin: 0 40px 0 40px;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  box-shadow: 15px 15px 20px rgb(80, 80, 80);
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
 
-/* Stylowanie scrollbarów dla przeglądarek opartych na silniku WebKit, takich jak Chrome i Safari */
 .productsList::-webkit-scrollbar {
   width: 6px;
 }
@@ -91,17 +92,14 @@ body {
 #nameContainer {
   flex-grow: 1;
   margin: 20px 10px 20px 20px;
-  background-color: white;
   border-radius: 10px;
   height: 60%;
-  /* border: 2px solid black; */
 }
 #quantityContainer {
   min-width: 50px;
   margin: 20px 20px 20px 10px;
   background-color: white;
   border-radius: 10px;
-  /* border: solid 2px rgb(0, 0, 0); */
 }
 #shoppingListContainer {
   display: flex;
@@ -115,14 +113,10 @@ body {
 #nameContainer3,
 #nameContainer4 {
   width: 33.3%;
-
-  /* flex-grow: 1; */
   padding: 0 10px 20px 10px;
   margin: 20px 0 20px 0;
   background-color: white;
   border-right: 1px solid lightgray;
-
-  /* border: 2px solid black; */
 }
 #nameContainer4 {
   border-right: none;
@@ -134,25 +128,28 @@ body {
   padding-bottom: 10px;
   text-align: center;
 }
-
 .shoppingList {
   display: flex;
   flex-grow: 1;
   flex-wrap: nowrap;
-  /* background-color: #f8d62d; */
+  background-color: #ffffff;
   border-radius: 10px;
-  /* height: 80%; */
-  /* width:50%; */
   border: 2px solid black;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  box-shadow: 15px 15px 20px rgb(80, 80, 80);
 }
 #price_container {
+  display: flex;
   width: 100%;
-  height: 30px;
+  height: 40px;
   border: 2px solid black;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
   border-radius: 10px;
   background-color: #fff;
   margin-top: 10px;
+  padding: 5px;
+  justify-content: space-around;
+  box-shadow: 15px 15px 20px rgb(80, 80, 80);
 }
 .price_paragraph {
   display: inline-block;
@@ -169,7 +166,11 @@ body {
   font-size: 140%;
   background-color: #f8d62d;
   border-radius: 10px;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  box-shadow: 15px 15px 20px rgb(80, 80, 80);
+  transition: all 0.1s ease-in-out;
+}
+.newListButtons:hover {
+  transform: scale(1.05);
 }
 #homer {
   position: absolute;
@@ -198,8 +199,4 @@ body {
   padding: 10px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
-}
-
-.hidden {
-  visibility: v;
 }

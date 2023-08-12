@@ -3,6 +3,10 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
 }
+@font-face {
+  font-family: simpsons;
+  src: url(../Simpson/Simpsonfont.ttf) format("truetype");
+}
 .alphabet {
   margin: 20px 20px;
   display: flex;
@@ -13,14 +17,11 @@ body {
   max-width: 1300px;
   height: 5vh;
   margin: 25px auto;
-  /* border: 5px solid red; */
 }
 
 #mainContainer {
   display: flex;
   width: 100%;
-  /* border: solid 5px black; */
-  /* justify-content: space-between; */
   max-width: 1500px;
   margin: 0 auto;
 }
@@ -30,7 +31,6 @@ body {
   justify-content: space-between;
   height: 80vh;
   min-height: 500px;
-  /* width: 20%; */
 }
 #productsContainerList {
   position: relative;
@@ -40,7 +40,7 @@ body {
   border: solid 2px black;
   border-radius: 10px;
   height: 80vh;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  box-shadow: 15px 15px 20px rgb(72, 72, 72);
   overflow: auto;
 }
 .productButton {
@@ -55,10 +55,15 @@ body {
   font-size: 140%;
   background-color: #f8d62d;
   border-radius: 10px;
-  box-shadow: 15px 15px 20px rgb(111, 111, 111);
+  box-shadow: 15px 15px 20px rgb(24, 24, 24);
+  transition: all 0.05s ease-in-out;
+}
+.productButton:hover {
+  transform: scale(1.1);
 }
 #productList {
   padding: 10px 10px;
+  background-color: #ffffff;
 }
 .button-success {
   background-color: rgb(113, 209, 114);

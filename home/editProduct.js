@@ -52,7 +52,7 @@ function displayData(data) {
         html += `<div id="g" class="${
           item.Category
         }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
-                    <span id="item-${key}" style="width:58%; border-bottom: 1px lightgrey solid; font-family:arial; margin-bottom: 3px">
+                    <span id="item-${key}" style="width:40%; border-bottom: 1px grey solid; font-family:arial; margin-bottom: 3px">
                       <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
                     </span>
                     
@@ -66,7 +66,7 @@ function displayData(data) {
                       <input id="inputPrice3-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 2px; " class="inputShop3" data-key="${key}" value="${
           item.Kuchnie_świata
         }">
-                      <button id="saveButton-${key}" style="background-color: white; border-radius: 5px; width: 70px; height:30px; margin: 0 2px" class="itemButton+" data-key="${key}">Zapisz</button>
+                      <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:30px; margin: 0 2px" class="itemButton+" data-key="${key}">Zapisz</button>
                     </div>
                   </div>`;
       }
@@ -95,9 +95,9 @@ function handleSaveButtonClick(key, event) {
 
   // Change the button text to "Zapisano" and set the background color
   saveButton.textContent = "Zapisano";
-  saveButton.style.backgroundColor = "rgb(113, 209, 114)"; // Change to the desired color
-  saveButton.style.transition = "background-color 0.5s ease"; // Change to the desired color
-  saveButton.style.color = "black"; // For better visibility
+  saveButton.style.backgroundColor = "rgb(113, 209, 114)";
+  saveButton.style.transition = "background-color 0.5s ease";
+  //   saveButton.style.color = "black";
 
   const inputPrice1 = parseFloat(
     document.getElementById(`inputPrice1-${key}`).value
