@@ -7,7 +7,7 @@
   src: url(../Simpson/Simpsonfont.ttf) format("truetype");
 }
 body {
-  background-image: url(../wallpaper.jpg);
+  background-image: url(../dajswallpaper.jpg);
   background-size: cover;
   display: flex;
   flex-wrap: wrap;
@@ -15,58 +15,44 @@ body {
   max-width: 1200px;
   margin: auto;
 }
-.alphabet {
-  margin: 20px 20px;
-  display: flex;
-  justify-content: space-between;
-  row-gap: 10px;
-  width: 100%;
-  min-width: 900px;
-  max-width: 1300px;
-  height: 5vh;
-  margin: 25px auto;
-}
+
 #mainContainer {
-  /* sprawdzić responsywność */
   display: flex;
-  width: 100%;
+  width: 90%;
   justify-content: space-between;
-  max-width: 1300px;
-  max-height: 800px;
-  margin: auto;
+  max-width: 1200px;
+  height: 90%;
+  margin:auto;
 }
 
 .productsContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  min-height: 500px;
 }
 .productButton {
   width: 70%;
-  min-width: 150px;
-  max-width: 200px;
-  min-height: 20px;
+  min-width: 120px;
+  max-width: 150px;
+  min-height:30px;
   max-height: 48px;
   flex-grow: 1;
-  margin: 0 5px;
+  margin: 2px 5px;
   font-family: "simpsons";
-  font-size: 140%;
+  font-size: 110%;
   background-color: #f8d62d;
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(80, 80, 80);
   transition: all 0.1s ease-in-out;
 }
 .productButton:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 .productsList {
   display: flex;
   flex-wrap: nowrap;
   border-radius: 10px;
   flex-grow: 1;
-
   max-width: 350px;
   min-width: 340px;
   border: 2px solid black;
@@ -94,7 +80,7 @@ body {
   flex-grow: 1;
   margin: 20px 10px 20px 20px;
   border-radius: 10px;
-  height: 60%;
+  height: 100%;
 }
 #quantityContainer {
   min-width: 50px;
@@ -158,20 +144,29 @@ body {
   width: 32%;
   text-align: center;
 }
+#btnssummary {
+  display:flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  /* flex-direction: row-reverse; */
+  height: 50px;
+}
 .newListButtons {
   flex-grow: 1;
-  margin: 15px 0 0 auto;
-  width: 250px;
-  max-height: 60px;
+  min-width: 120px;
+  max-width: 135px;
+  min-height: 40px;
+  max-height: 48px;
+  margin: 0 0 0 15px;
   font-family: "simpsons";
-  font-size: 140%;
+  font-size: 105%;
   background-color: #f8d62d;
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgb(80, 80, 80);
   transition: all 0.1s ease-in-out;
 }
 .newListButtons:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 #homer {
   position: absolute;

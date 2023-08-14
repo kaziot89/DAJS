@@ -143,7 +143,15 @@ function displayData(data) {
         );
         if (container) {
           container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
-          price.innerHTML += lowestPrice * itemCounts[itemName];
+          const itemPrice = lowestPrice * itemCounts[itemName];
+          products.push({
+            itemName: itemName,
+            lowestPrice: lowestPrice,
+          });
+
+          // Update total cost
+          totalCost += itemPrice;
+          console.log(itemPrice);
         }
 
         // Update the lowest price in the appropriate <span> element
@@ -159,8 +167,10 @@ function displayData(data) {
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
 
         // Update the price based on the new counter value
-        const { price, lowestPrice } = getLowestPrice(data[itemName]);
-        price.innerHTML = lowestPrice * itemCounts[itemName];
+        // const { price, lowestPrice } = getLowestPrice(data[itemName]);
+        // price.innerHTML = lowestPrice * itemCounts[itemName];
+        // const itemPrice = lowestPrice * itemCounts[itemName];
+        price.innerHTML = itemPrice;
 
         // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
@@ -169,6 +179,7 @@ function displayData(data) {
             lowestPrice * itemCounts[itemName]
           } zł`; // Update the displayed value
         }
+        totalCost += itemPrice;
       }
       updateSelectedProducts(itemName);
     });
@@ -306,32 +317,6 @@ function displayData(data) {
       }
     }
   }
-
-  // function updateSelectedProducts(itemName) {
-  //   const item = data[itemName];
-  //   const { container, shopName } = getLowestPrice(item);
-
-  //   if (shopName) {
-  //     if (itemCounts[itemName] === 0) {
-  //       // Remove the item from selectedProducts if its count is zero
-  //       const index = selectedProducts[shopName].indexOf(itemName);
-  //       if (index !== -1) {
-  //         selectedProducts[shopName].splice(index, 1);
-  //         // Clear the counter div if it exists
-  //         const counterToUpdate = document.getElementById(
-  //           `counter-${itemName}`
-  //         );
-  //         if (counterToUpdate) {
-  //           counterToUpdate.remove();
-  //         }
-  //       }
-  //     } else if (!selectedProducts[shopName].includes(itemName)) {
-  //       selectedProducts[shopName].push(itemName);
-  //       // Update the totalSum by adding the price of the selected item
-  //       const { lowestPrice } = getLowestPrice(item);
-  //       totalSum += lowestPrice * itemCounts[itemName];
-  //     }
-  //   }}
 
   function getLowestPriceElement(index) {
     if (index === 0) {
@@ -519,27 +504,9 @@ function generateSummary(selectedProducts) {
 
   summaryHtml += `<p><strong>Razem: ${totalSum.toFixed(2)} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
-  ///////////////////????????????????????????????????????/////////////////////////////////
-  /*for (const shopName of shopOrder) {
-    selectedProducts[shopName] = [];
-  } */
-  /////////////////////////////////////////////////////////////////////////////
-  localStorage.removeItem("itemCounts");
-  window.location.href = "summaryPage.html";
-}
-
-/*
-
-  if (summaryHtml === "<h2>Podsumowanie:</h2>") {
-    summaryHtml += "<p>Nic nie wybrałeś.</p>";
-  }
-  localStorage.setItem("summaryHtml", summaryHtml);
-  // summaryContainer.innerHTML = summaryHtml;
-
-  // Clear the selectedProducts array to ensure only current selections are included
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
   }
+  localStorage.removeItem("itemCounts");
   window.location.href = "summaryPage.html";
 }
-*/
