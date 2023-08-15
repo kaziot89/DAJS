@@ -32,7 +32,12 @@ get(dataRef)
     console.error("Error retrieving data:", error);
   });
 let totalSum = 0;
-
+let totalCost = 0;
+const shopPrices = {
+  Farutex: 0,
+  Makro: 0,
+  Kuchnie_świata: 0,
+};
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
   const counterContainer1 = document.getElementById("nameContainer2");
@@ -137,39 +142,46 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
-        console.log(itemCounts);
-        const { container, price, lowestPrice } = getLowestPrice(
-          data[itemName]
-        );
-        if (container) {
-          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
-          price.innerHTML += lowestPrice * itemCounts[itemName];
-        }
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
       } else {
         itemCounts[itemName]++;
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
-
-        // Update the price based on the new counter value
-        const { price, lowestPrice } = getLowestPrice(data[itemName]);
-        price.innerHTML = lowestPrice * itemCounts[itemName];
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
       }
+
+      console.log(itemCounts);
+
+      const { container, price, lowestPrice } = getLowestPrice(data[itemName]);
+
+      if (container) {
+        const counterElement = document.getElementById(`counter-${itemName}`);
+        if (counterElement) {
+          counterElement.innerHTML = `
+            ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+        } else {
+          container.innerHTML += `
+            <div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">
+              ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>
+            </div>`;
+        }
+
+        const itemPrice = lowestPrice * itemCounts[itemName];
+        console.log(itemPrice);
+      }
+
+      // Update the totalSum instead of totalCost
+      totalSum = Object.values(itemCounts).reduce((sum, count) => {
+        const item = data[getKeyForItemName(itemCounts, count)];
+        const { lowestPrice } = getLowestPrice(item);
+        return sum + lowestPrice * count;
+      }, 0);
+      price.innerHTML = totalSum;
+
+      // You might need to adjust the following logic based on your HTML structure
+      const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+      if (lowestPriceElement) {
+        lowestPriceElement.textContent = `${
+          lowestPrice * itemCounts[itemName]
+        } zł`;
+      } // Update the displayed value
+
       updateSelectedProducts(itemName);
     });
 
@@ -220,6 +232,8 @@ function displayData(data) {
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
 
         // Subtract the price of the cleared item from totalSum
+        totalCost -= lowestPrice * itemCounts[itemName];
+        console.log(totalCost);
         totalSum -= lowestPrice * itemCounts[itemName];
 
         itemCounts[itemName] = 0;
@@ -307,32 +321,6 @@ function displayData(data) {
     }
   }
 
-  // function updateSelectedProducts(itemName) {
-  //   const item = data[itemName];
-  //   const { container, shopName } = getLowestPrice(item);
-
-  //   if (shopName) {
-  //     if (itemCounts[itemName] === 0) {
-  //       // Remove the item from selectedProducts if its count is zero
-  //       const index = selectedProducts[shopName].indexOf(itemName);
-  //       if (index !== -1) {
-  //         selectedProducts[shopName].splice(index, 1);
-  //         // Clear the counter div if it exists
-  //         const counterToUpdate = document.getElementById(
-  //           `counter-${itemName}`
-  //         );
-  //         if (counterToUpdate) {
-  //           counterToUpdate.remove();
-  //         }
-  //       }
-  //     } else if (!selectedProducts[shopName].includes(itemName)) {
-  //       selectedProducts[shopName].push(itemName);
-  //       // Update the totalSum by adding the price of the selected item
-  //       const { lowestPrice } = getLowestPrice(item);
-  //       totalSum += lowestPrice * itemCounts[itemName];
-  //     }
-  //   }}
-
   function getLowestPriceElement(index) {
     if (index === 0) {
       return document.getElementById("price_paragraph1");
@@ -364,7 +352,14 @@ function displayData(data) {
     generateSummary(selectedProducts);
   });
 }
-
+function getKeyForItemName(itemCounts, count) {
+  for (const key in itemCounts) {
+    if (itemCounts[key] === count) {
+      return key;
+    }
+  }
+  return null;
+}
 const $returnHomeButton = document.getElementById("returnToHome");
 $returnHomeButton.addEventListener("click", returnToHome);
 
@@ -519,27 +514,9 @@ function generateSummary(selectedProducts) {
 
   summaryHtml += `<p><strong>Razem: ${totalSum.toFixed(2)} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
-  ///////////////////????????????????????????????????????/////////////////////////////////
-  /*for (const shopName of shopOrder) {
-    selectedProducts[shopName] = [];
-  } */
-  /////////////////////////////////////////////////////////////////////////////
-  localStorage.removeItem("itemCounts");
-  window.location.href = "summaryPage.html";
-}
-
-/*
-
-  if (summaryHtml === "<h2>Podsumowanie:</h2>") {
-    summaryHtml += "<p>Nic nie wybrałeś.</p>";
-  }
-  localStorage.setItem("summaryHtml", summaryHtml);
-  // summaryContainer.innerHTML = summaryHtml;
-
-  // Clear the selectedProducts array to ensure only current selections are included
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
   }
+  localStorage.removeItem("itemCounts");
   window.location.href = "summaryPage.html";
 }
-*/
