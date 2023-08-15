@@ -7,7 +7,7 @@
   src: url(../Simpson/Simpsonfont.ttf) format("truetype");
 }
 body {
-  background-image: url(../dajswallpaper.jpg);
+  background-image: url(Pictures/dajswallpaper.jpg);
   background-size: cover;
   display: flex;
   flex-wrap: wrap;

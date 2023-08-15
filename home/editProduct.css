@@ -3,7 +3,7 @@
   padding: 0;
 }
 body {
-  background-image: url(../dajswallpaper.jpg);
+  background-image: url(Pictures/dajswallpaper.jpg);
   background-size: cover;
   display: flex;
   flex-wrap: wrap;
