@@ -236,15 +236,18 @@ function displayData(data) {
       }
       updateSelectedProducts(itemName);
     });
-
     buttonClear.addEventListener("click", function () {
       if (itemCounts[itemName] > 0) {
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
 
-        totalCost -= lowestPrice * itemCounts[itemName];
-        console.log(totalCost);
-        totalSum -= lowestPrice * itemCounts[itemName];
+        if (selectedProducts.Farutex.includes(itemName)) {
+          totalSum1 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Makro.includes(itemName)) {
+          totalSum2 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Kuchnie_świata.includes(itemName)) {
+          totalSum3 -= lowestPrice * itemCounts[itemName];
+        }
 
         itemCounts[itemName] = 0;
         counterToUpdate.remove();
@@ -258,9 +261,34 @@ function displayData(data) {
         }
 
         updateSelectedProducts(itemName);
-        localStorage.removeItem("itemCounts");
+        localStorage.setItem("itemCounts", JSON.stringify(itemCounts));
       }
     });
+
+    // buttonClear.addEventListener("click", function () {
+    //   if (itemCounts[itemName] > 0) {
+    //     const counterToUpdate = document.getElementById(`counter-${itemName}`);
+    //     const { price, lowestPrice } = getLowestPrice(data[itemName]);
+
+    //     totalCost -= lowestPrice * itemCounts[itemName];
+    //     console.log(totalCost);
+    //     totalSum -= lowestPrice * itemCounts[itemName];
+
+    //     itemCounts[itemName] = 0;
+    //     counterToUpdate.remove();
+
+    //     price.innerHTML = lowestPrice * itemCounts[itemName];
+    //     const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+    //     if (lowestPriceElement) {
+    //       lowestPriceElement.textContent = `${
+    //         lowestPrice * itemCounts[itemName]
+    //       } zł`;
+    //     }
+
+    //     updateSelectedProducts(itemName);
+    //     localStorage.removeItem("itemCounts");
+    //   }
+    // });
 
     buttonMinus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
@@ -278,11 +306,9 @@ function displayData(data) {
           counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
         }
 
-        // Update the price based on the new counter value
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
         price.innerHTML = lowestPrice * itemCounts[itemName];
 
-        // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
@@ -532,8 +558,10 @@ function generateSummary(selectedProducts) {
   }
 
   summaryHtml += `<p><strong>Razem: ${totalSum1.toFixed(2)} zł</strong></p>`;
-  summaryHtml += `<p><strong>Razem: ${totalSum2.toFixed(2)} zł</strong></p>`;
-  summaryHtml += `<p><strong>Razem: ${totalSum3.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Makro: ${totalSum2.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Kuchnie świata: ${totalSum3.toFixed(
+    2
+  )} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
