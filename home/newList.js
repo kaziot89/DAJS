@@ -164,16 +164,18 @@ function displayData(data) {
 
         const itemPrice = lowestPrice * itemCounts[itemName];
         console.log(itemPrice);
+
+        price.innerHTML = itemPrice * itemCounts[itemName];
       }
 
       // Update the totalSum instead of totalCost
+
       totalSum = Object.values(itemCounts).reduce((sum, count) => {
         const item = data[getKeyForItemName(itemCounts, count)];
         const { lowestPrice } = getLowestPrice(item);
         return sum + lowestPrice * count;
       }, 0);
       price.innerHTML = totalSum;
-
       // You might need to adjust the following logic based on your HTML structure
       const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
       if (lowestPriceElement) {
@@ -352,6 +354,7 @@ function displayData(data) {
     generateSummary(selectedProducts);
   });
 }
+
 function getKeyForItemName(itemCounts, count) {
   for (const key in itemCounts) {
     if (itemCounts[key] === count) {
