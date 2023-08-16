@@ -31,7 +31,9 @@ get(dataRef)
   .catch((error) => {
     console.error("Error retrieving data:", error);
   });
-let totalSum = 0;
+let totalSum1 = 0;
+let totalSum2 = 0;
+let totalSum3 = 0;
 let totalCost = 0;
 const shopPrices = {
   Farutex: 0,
@@ -165,25 +167,41 @@ function displayData(data) {
         const itemPrice = lowestPrice * itemCounts[itemName];
         console.log(itemPrice);
 
-        price.innerHTML = itemPrice * itemCounts[itemName];
+        price.innerHTML = itemPrice;
+      }
+      console.log("Clicked item:", itemName);
+      console.log("Container:", container);
+      // Update the respective totalSum variable based on the shop
+      // Update the respective totalSum variable based on the shop
+      if (container === counterContainer1) {
+        totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
+          const item = data[itemName];
+          const { lowestPrice } = getLowestPrice(item);
+          return sum + lowestPrice * itemCounts[itemName];
+        }, 0);
+        priceContainer1.innerHTML = totalSum1;
+      } else if (container === counterContainer2) {
+        totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
+          const item = data[itemName];
+          const { lowestPrice } = getLowestPrice(item);
+          return sum + lowestPrice * itemCounts[itemName];
+        }, 0);
+        priceContainer2.innerHTML = totalSum2;
+      } else if (container === counterContainer3) {
+        totalSum3 = selectedProducts.Kuchnie_świata.reduce((sum, itemName) => {
+          const item = data[itemName];
+          const { lowestPrice } = getLowestPrice(item);
+          return sum + lowestPrice * itemCounts[itemName];
+        }, 0);
+        priceContainer3.innerHTML = totalSum3;
       }
 
-      // Update the totalSum instead of totalCost
-
-      totalSum = Object.values(itemCounts).reduce((sum, count) => {
-        const item = data[getKeyForItemName(itemCounts, count)];
-        const { lowestPrice } = getLowestPrice(item);
-        return sum + lowestPrice * count;
-      }, 0);
-      price.innerHTML = totalSum;
-      // You might need to adjust the following logic based on your HTML structure
       const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
       if (lowestPriceElement) {
-        lowestPriceElement.textContent = `${
-          lowestPrice * itemCounts[itemName]
-        } zł`;
-      } // Update the displayed value
+        lowestPriceElement.textContent = `${itemPrice} zł`; // Update the displayed value
+      }
 
+      // Update the selected products based on the new item count
       updateSelectedProducts(itemName);
     });
 
@@ -299,30 +317,39 @@ function displayData(data) {
 
     if (shopName) {
       if (itemCounts[itemName] === 0) {
-        // Remove the item from selectedProducts if its count is zero
         const index = selectedProducts[shopName].indexOf(itemName);
         if (index !== -1) {
           selectedProducts[shopName].splice(index, 1);
-          // Clear the counter div if it exists
-          const counterToUpdate = document.getElementById(
-            `counter-${itemName}`
-          );
-          if (counterToUpdate) {
-            counterToUpdate.remove();
-          }
-          // Update the totalSum by subtracting the price of the removed item
-          const { lowestPrice } = getLowestPrice(item);
-          totalSum -= lowestPrice * itemCounts[itemName];
         }
       } else if (!selectedProducts[shopName].includes(itemName)) {
         selectedProducts[shopName].push(itemName);
-        // Update the totalSum by adding the price of the selected item
-        const { lowestPrice } = getLowestPrice(item);
-        totalSum += lowestPrice * itemCounts[itemName];
       }
+      // Calculate the total sums based on the updated selectedProducts
+      calculateTotalSums(selectedProducts);
     }
   }
 
+  function calculateTotalSums(selectedProducts) {
+    totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum3 = selectedProducts.Kuchnie_świata.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+
+    priceContainer1.innerHTML = totalSum1;
+    priceContainer2.innerHTML = totalSum2;
+    priceContainer3.innerHTML = totalSum3;
+  }
   function getLowestPriceElement(index) {
     if (index === 0) {
       return document.getElementById("price_paragraph1");
