@@ -19,7 +19,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// Access the Firebase database
 const database = getDatabase(app);
 
 const dataRef = ref(database, "products");
@@ -169,10 +168,8 @@ function displayData(data) {
 
         price.innerHTML = itemPrice;
       }
-      console.log("Clicked item:", itemName);
-      console.log("Container:", container);
-      // Update the respective totalSum variable based on the shop
-      // Update the respective totalSum variable based on the shop
+      // console.log("Clicked item:", itemName);
+      // console.log("Container:", container);
       if (container === counterContainer1) {
         totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
           const item = data[itemName];
@@ -198,16 +195,14 @@ function displayData(data) {
 
       const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
       if (lowestPriceElement) {
-        lowestPriceElement.textContent = `${itemPrice} zł`; // Update the displayed value
+        lowestPriceElement.textContent = `${itemPrice} zł`;
       }
 
-      // Update the selected products based on the new item count
       updateSelectedProducts(itemName);
     });
 
     buttonPlus5.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
-        // If the item has not been added before, initialize the count to 1
         itemCounts[itemName] = 1 * 5;
         console.log(itemCounts);
         const { container, price, lowestPrice } = getLowestPrice(
@@ -218,29 +213,25 @@ function displayData(data) {
           price.innerHTML += lowestPrice * itemCounts[itemName];
         }
 
-        // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
       } else {
-        // If the item has been added before, increment the count by 5
         itemCounts[itemName] += 5;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
 
-        // Update the price based on the new counter value
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
         price.innerHTML = lowestPrice * itemCounts[itemName];
 
-        // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
       }
       updateSelectedProducts(itemName);
@@ -251,7 +242,6 @@ function displayData(data) {
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
 
-        // Subtract the price of the cleared item from totalSum
         totalCost -= lowestPrice * itemCounts[itemName];
         console.log(totalCost);
         totalSum -= lowestPrice * itemCounts[itemName];
@@ -259,13 +249,12 @@ function displayData(data) {
         itemCounts[itemName] = 0;
         counterToUpdate.remove();
 
-        // Update the price and lowest price to reflect the cleared item
         price.innerHTML = lowestPrice * itemCounts[itemName];
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
 
         updateSelectedProducts(itemName);
@@ -298,7 +287,7 @@ function displayData(data) {
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
         updateSelectedProducts(itemName);
       }
@@ -324,7 +313,7 @@ function displayData(data) {
       } else if (!selectedProducts[shopName].includes(itemName)) {
         selectedProducts[shopName].push(itemName);
       }
-      // Calculate the total sums based on the updated selectedProducts
+
       calculateTotalSums(selectedProducts);
     }
   }
@@ -346,9 +335,9 @@ function displayData(data) {
       return sum + lowestPrice * itemCounts[itemName];
     }, 0);
 
-    priceContainer1.innerHTML = totalSum1;
-    priceContainer2.innerHTML = totalSum2;
-    priceContainer3.innerHTML = totalSum3;
+    priceContainer1.innerHTML = totalSum1.toFixed(2);
+    priceContainer2.innerHTML = totalSum2.toFixed(2);
+    priceContainer3.innerHTML = totalSum3.toFixed(2);
   }
   function getLowestPriceElement(index) {
     if (index === 0) {
@@ -542,7 +531,9 @@ function generateSummary(selectedProducts) {
     summaryHtml += "<p>Nic nie wybrałeś.</p>";
   }
 
-  summaryHtml += `<p><strong>Razem: ${totalSum.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Razem: ${totalSum1.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Razem: ${totalSum2.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Razem: ${totalSum3.toFixed(2)} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
