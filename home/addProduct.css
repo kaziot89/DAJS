@@ -8,29 +8,31 @@ html {
 body {
   background-image: url("../wallpaper.jpg");
   background-size: cover;
-  min-width: 1250px;
-}
-
-body {
-  width: 60%;
+  min-width: 800px;
+  height: 100vh;
+  min-width: 1200px;
   margin: 0 auto;
   font-family: "simpsons";
 }
-
 #mainContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
-  margin: 20vh auto 10vh;
+  flex-direction: column;
 }
 #name,
 #category {
   display: flex;
   flex-direction: column;
-  height: 200px;
-  width: 30%;
+  height: 130px;
+  width: 400px;
+  margin: 0 auto;
   font-size: 24px;
 }
 #category {
-  width: 100%;
+  margin: 0 auto;
 }
 #pricePerKgParagraph {
   font-size: 24px;
@@ -38,28 +40,29 @@ body {
 }
 #pricesContainer {
   display: flex;
-  justify-content: space-around;
-  margin-left: 100px;
-  width: 40%;
+  justify-content: left;
+  width: 400px;
+  justify-content: space-between;
   font-size: 24px;
+  margin: 0 auto;
 }
 .shopContainer {
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 30%;
 }
 input,
 select {
   width: 80%;
   margin: 30px 0 30px 0;
-  padding: 5px 5px 5px 5px;
+  /* padding: 5px 5px 5px 5px; */
   font-family: arial;
   font-size: 24px;
   border-radius: 10px;
   box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.716);
 }
 #categorySelector {
-  width: 100%;
+  width: 200px;
 }
 .shopContainer input {
   width: 100px;
@@ -69,7 +72,8 @@ select {
   flex-direction: column;
   justify-content: flex-end;
   height: 200px;
-  margin-right: 100px;
+  width: 400px;
+  margin: 0 auto 100px auto;
 }
 button {
   background-color: transparent;

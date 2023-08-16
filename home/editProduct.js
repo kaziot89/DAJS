@@ -137,12 +137,13 @@ function handleSaveButtonClick(key, event) {
       // ... (similar code for error handling)
     });
 }
-const $returnHomeButton = document.getElementById("returnBtn");
+const $returnHomeButton = document.getElementById("returnButton");
 $returnHomeButton.addEventListener("click", returnToHome);
 
 function returnToHome() {
   window.location.href = "index.html";
 }
+
 // DO ZROBIENIA BUTTONY KATEGORII
 // const buttonAllProducts = document.getElementById("allProducts");
 // const buttonMeat = document.getElementById("meat");

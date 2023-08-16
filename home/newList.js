@@ -142,6 +142,30 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
+        console.log(itemCounts);
+        const { container, price, lowestPrice } = getLowestPrice(
+          data[itemName]
+        );
+        if (container) {
+          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          const itemPrice = lowestPrice * itemCounts[itemName];
+          products.push({
+            itemName: itemName,
+            lowestPrice: lowestPrice,
+          });
+
+          // Update total cost
+          totalCost += itemPrice;
+          console.log(itemPrice);
+        }
+
+        // Update the lowest price in the appropriate <span> element
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${
+            lowestPrice * itemCounts[itemName]
+          } zł`; // Update the displayed value
+        }
       } else {
         itemCounts[itemName]++;
       }
