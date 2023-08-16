@@ -19,7 +19,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// Access the Firebase database
 const database = getDatabase(app);
 
 const dataRef = ref(database, "products");
@@ -31,8 +30,15 @@ get(dataRef)
   .catch((error) => {
     console.error("Error retrieving data:", error);
   });
-let totalSum = 0;
-
+let totalSum1 = 0;
+let totalSum2 = 0;
+let totalSum3 = 0;
+let totalCost = 0;
+const shopPrices = {
+  Farutex: 0,
+  Makro: 0,
+  Kuchnie_świata: 0,
+};
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
   const counterContainer1 = document.getElementById("nameContainer2");
@@ -137,56 +143,66 @@ function displayData(data) {
     buttonPlus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 1;
-        console.log(itemCounts);
-        const { container, price, lowestPrice } = getLowestPrice(
-          data[itemName]
-        );
-        if (container) {
-          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
-          const itemPrice = lowestPrice * itemCounts[itemName];
-          products.push({
-            itemName: itemName,
-            lowestPrice: lowestPrice,
-          });
-
-          // Update total cost
-          totalCost += itemPrice;
-          console.log(itemPrice);
-        }
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
       } else {
         itemCounts[itemName]++;
-        const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
-
-        // Update the price based on the new counter value
-        // const { price, lowestPrice } = getLowestPrice(data[itemName]);
-        // price.innerHTML = lowestPrice * itemCounts[itemName];
-        // const itemPrice = lowestPrice * itemCounts[itemName];
-        price.innerHTML = itemPrice;
-
-        // Update the lowest price in the appropriate <span> element
-        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-        if (lowestPriceElement) {
-          lowestPriceElement.textContent = `${
-            lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
-        }
-        totalCost += itemPrice;
       }
+
+      console.log(itemCounts);
+
+      const { container, price, lowestPrice } = getLowestPrice(data[itemName]);
+
+      if (container) {
+        const counterElement = document.getElementById(`counter-${itemName}`);
+        if (counterElement) {
+          counterElement.innerHTML = `
+            ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+        } else {
+          container.innerHTML += `
+            <div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">
+              ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>
+            </div>`;
+        }
+
+        const itemPrice = lowestPrice * itemCounts[itemName];
+        console.log(itemPrice);
+
+        price.innerHTML = itemPrice;
+      }
+      // console.log("Clicked item:", itemName);
+      // console.log("Container:", container);
+      if (container === counterContainer1) {
+        totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
+          const item = data[itemName];
+          const { lowestPrice } = getLowestPrice(item);
+          return sum + lowestPrice * itemCounts[itemName];
+        }, 0);
+        priceContainer1.innerHTML = totalSum1;
+      } else if (container === counterContainer2) {
+        totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
+          const item = data[itemName];
+          const { lowestPrice } = getLowestPrice(item);
+          return sum + lowestPrice * itemCounts[itemName];
+        }, 0);
+        priceContainer2.innerHTML = totalSum2;
+      } else if (container === counterContainer3) {
+        totalSum3 = selectedProducts.Kuchnie_świata.reduce((sum, itemName) => {
+          const item = data[itemName];
+          const { lowestPrice } = getLowestPrice(item);
+          return sum + lowestPrice * itemCounts[itemName];
+        }, 0);
+        priceContainer3.innerHTML = totalSum3;
+      }
+
+      const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+      if (lowestPriceElement) {
+        lowestPriceElement.textContent = `${itemPrice} zł`;
+      }
+
       updateSelectedProducts(itemName);
     });
 
     buttonPlus5.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
-        // If the item has not been added before, initialize the count to 1
         itemCounts[itemName] = 1 * 5;
         console.log(itemCounts);
         const { container, price, lowestPrice } = getLowestPrice(
@@ -197,58 +213,82 @@ function displayData(data) {
           price.innerHTML += lowestPrice * itemCounts[itemName];
         }
 
-        // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
       } else {
-        // If the item has been added before, increment the count by 5
         itemCounts[itemName] += 5;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
 
-        // Update the price based on the new counter value
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
         price.innerHTML = lowestPrice * itemCounts[itemName];
 
-        // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
       }
       updateSelectedProducts(itemName);
     });
-
     buttonClear.addEventListener("click", function () {
       if (itemCounts[itemName] > 0) {
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
 
-        // Subtract the price of the cleared item from totalSum
-        totalSum -= lowestPrice * itemCounts[itemName];
+        if (selectedProducts.Farutex.includes(itemName)) {
+          totalSum1 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Makro.includes(itemName)) {
+          totalSum2 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Kuchnie_świata.includes(itemName)) {
+          totalSum3 -= lowestPrice * itemCounts[itemName];
+        }
 
         itemCounts[itemName] = 0;
         counterToUpdate.remove();
 
-        // Update the price and lowest price to reflect the cleared item
         price.innerHTML = lowestPrice * itemCounts[itemName];
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
 
         updateSelectedProducts(itemName);
-        localStorage.removeItem("itemCounts");
+        localStorage.setItem("itemCounts", JSON.stringify(itemCounts));
       }
     });
+
+    // buttonClear.addEventListener("click", function () {
+    //   if (itemCounts[itemName] > 0) {
+    //     const counterToUpdate = document.getElementById(`counter-${itemName}`);
+    //     const { price, lowestPrice } = getLowestPrice(data[itemName]);
+
+    //     totalCost -= lowestPrice * itemCounts[itemName];
+    //     console.log(totalCost);
+    //     totalSum -= lowestPrice * itemCounts[itemName];
+
+    //     itemCounts[itemName] = 0;
+    //     counterToUpdate.remove();
+
+    //     price.innerHTML = lowestPrice * itemCounts[itemName];
+    //     const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+    //     if (lowestPriceElement) {
+    //       lowestPriceElement.textContent = `${
+    //         lowestPrice * itemCounts[itemName]
+    //       } zł`;
+    //     }
+
+    //     updateSelectedProducts(itemName);
+    //     localStorage.removeItem("itemCounts");
+    //   }
+    // });
 
     buttonMinus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
@@ -266,16 +306,14 @@ function displayData(data) {
           counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
         }
 
-        // Update the price based on the new counter value
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
         price.innerHTML = lowestPrice * itemCounts[itemName];
 
-        // Update the lowest price in the appropriate <span> element
         const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
         if (lowestPriceElement) {
           lowestPriceElement.textContent = `${
             lowestPrice * itemCounts[itemName]
-          } zł`; // Update the displayed value
+          } zł`;
         }
         updateSelectedProducts(itemName);
       }
@@ -294,30 +332,39 @@ function displayData(data) {
 
     if (shopName) {
       if (itemCounts[itemName] === 0) {
-        // Remove the item from selectedProducts if its count is zero
         const index = selectedProducts[shopName].indexOf(itemName);
         if (index !== -1) {
           selectedProducts[shopName].splice(index, 1);
-          // Clear the counter div if it exists
-          const counterToUpdate = document.getElementById(
-            `counter-${itemName}`
-          );
-          if (counterToUpdate) {
-            counterToUpdate.remove();
-          }
-          // Update the totalSum by subtracting the price of the removed item
-          const { lowestPrice } = getLowestPrice(item);
-          totalSum -= lowestPrice * itemCounts[itemName];
         }
       } else if (!selectedProducts[shopName].includes(itemName)) {
         selectedProducts[shopName].push(itemName);
-        // Update the totalSum by adding the price of the selected item
-        const { lowestPrice } = getLowestPrice(item);
-        totalSum += lowestPrice * itemCounts[itemName];
       }
+
+      calculateTotalSums(selectedProducts);
     }
   }
 
+  function calculateTotalSums(selectedProducts) {
+    totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum3 = selectedProducts.Kuchnie_świata.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+
+    priceContainer1.innerHTML = totalSum1.toFixed(2);
+    priceContainer2.innerHTML = totalSum2.toFixed(2);
+    priceContainer3.innerHTML = totalSum3.toFixed(2);
+  }
   function getLowestPriceElement(index) {
     if (index === 0) {
       return document.getElementById("price_paragraph1");
@@ -350,6 +397,14 @@ function displayData(data) {
   });
 }
 
+function getKeyForItemName(itemCounts, count) {
+  for (const key in itemCounts) {
+    if (itemCounts[key] === count) {
+      return key;
+    }
+  }
+  return null;
+}
 const $returnHomeButton = document.getElementById("returnToHome");
 $returnHomeButton.addEventListener("click", returnToHome);
 
@@ -502,7 +557,11 @@ function generateSummary(selectedProducts) {
     summaryHtml += "<p>Nic nie wybrałeś.</p>";
   }
 
-  summaryHtml += `<p><strong>Razem: ${totalSum.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Razem: ${totalSum1.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Makro: ${totalSum2.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Kuchnie świata: ${totalSum3.toFixed(
+    2
+  )} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
