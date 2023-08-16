@@ -1,6 +1,9 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 }
 body {
   background-image: url(Pictures/dajswallpaper.jpg);
@@ -33,8 +36,10 @@ body {
   min-height: 350px;
 }
 #productsContainerList {
+  position: relative;
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: column;
   border-radius: 10px;
   flex-grow: 1;
   max-width: 550px;
@@ -48,6 +53,54 @@ body {
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+}
+#header {
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  /* margin-top: 10px; */
+  top: 0px;
+  height: 50px;
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid black;
+  z-index: 1;
+
+  box-shadow: 0 10px 10px 0 rgb(75, 75, 75);
+  font-family: "simpsons";
+  font-size: 16px;
+  width: 100%;
+}
+#product_name {
+  width: 30%;
+  margin-left: 10px;
+  height: 40px;
+  line-height: 45px;
+}
+#shop_names {
+  display: flex;
+  /* width: 240px; */
+  margin-right: 10px;
+  height: 40px;
+  line-height: 50px;
+  font-size: 13px;
+}
+#shop1,
+#shop2 {
+  width: 52px;
+  margin-right: 5px;
+  line-height: 45px;
+}
+#shop3 {
+  width: 52px;
+  margin-right: 5px;
+  line-height: 45px;
+}
+#empty {
+  width: 80px;
+  height: 40px;
 }
 .productButton,
 #returnButton {
@@ -82,7 +135,7 @@ body {
 }
 #productList {
   flex-grow: 1;
-  margin: 20px 10px 20px 20px;
+  margin: 5px 10px 20px 10px;
   border-radius: 10px;
   height: 100%;
 }
