@@ -101,10 +101,8 @@ body {
 }
 .productButton,
 .navButtons {
-  width: 120px;
-  min-height: 30px;
-  max-height: 48px;
-  flex-grow: 1;
+  width: 150px;
+  height: 45px;
   margin: 5px 5px;
   font-family: "simpsons";
   font-size: 110%;
@@ -117,14 +115,12 @@ body {
   order: 1;
   display: flex;
   flex-direction: column-reverse;
-  /* align-items: flex-end; */
-  /* justify-self: flex-end; */
   min-height: 400px;
 }
 .navButtons {
   align-self: flex-end;
-  min-height: 40px;
-  width: 120px;
+  height: 45px;
+  width: 150px;
   margin-top: 10px;
 }
 .productButton:hover,
@@ -132,7 +128,7 @@ body {
   transform: scale(1.1);
 }
 #productList {
-  flex-grow: 1;
+  /* flex-grow: 1; */
   margin: 5px 10px 20px 10px;
   border-radius: 10px;
   height: 100%;

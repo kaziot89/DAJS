@@ -99,7 +99,7 @@ select {
 }
 button {
   background-color: transparent;
-  height: 40px;
+  height: 45px;
   /* min-height: 40px; */
   width: 47%;
   min-width: 150px;

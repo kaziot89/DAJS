@@ -32,12 +32,11 @@ body {
   justify-content: space-between;
 }
 .productButton {
-  width: 70%;
-  min-width: 120px;
-  max-width: 150px;
-  min-height: 30px;
-  max-height: 48px;
-  flex-grow: 1;
+  /* width: 70%; */
+  width: 150px;
+
+  height: 45px;
+
   margin: 2px 5px;
   font-family: "simpsons";
   font-size: 110%;
