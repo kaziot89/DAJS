@@ -74,3 +74,15 @@ saveBtn.addEventListener("click", add);
 returnBtn.addEventListener("click", function back() {
   window.location.href = "index.html";
 });
+const $newListButton = document.getElementById("newList");
+$newListButton.addEventListener("click", newList);
+
+function newList() {
+  window.location.href = "newList.html";
+}
+const $editProducts = document.getElementById("editProducts");
+$editProducts.addEventListener("click", editProducts);
+
+function editProducts() {
+  window.location.href = "editProduct.html";
+}

@@ -68,7 +68,8 @@ function displayData(data) {
               <input id="inputPrice3-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px; " class="inputShop3" data-key="${key}" value="${
           item.Kuchnie_świata !== undefined ? item.Kuchnie_świata : ""
         }">
-              <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button>
+              <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button><button  style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 5px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+              
             </div>
           </div>`;
       }
@@ -140,7 +141,7 @@ function handleSaveButtonClick(key, event) {
         saveButton.textContent = originalButtonText;
         saveButton.style.backgroundColor = originalButtonBackgroundColor;
         saveButton.style.color = ""; // Reset color to default
-      }, 1000);
+      }, 2000);
     })
     .catch((error) => {
       // ... (similar code for error handling)
@@ -162,6 +163,20 @@ $returnHomeButton.addEventListener("click", returnToHome);
 
 function returnToHome() {
   window.location.href = "index.html";
+}
+
+const $newListButton = document.getElementById("newList");
+$newListButton.addEventListener("click", newList);
+
+function newList() {
+  window.location.href = "newList.html";
+}
+
+const $addProduct = document.getElementById("addProduct");
+$addProduct.addEventListener("click", addProduct);
+
+function addProduct() {
+  window.location.href = "addProduct.html";
 }
 
 const buttonAllProducts = document.getElementById("allProducts");

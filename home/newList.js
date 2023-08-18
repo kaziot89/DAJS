@@ -155,11 +155,11 @@ function displayData(data) {
         const counterElement = document.getElementById(`counter-${itemName}`);
         if (counterElement) {
           counterElement.innerHTML = `
-            ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+            ${itemName} <span style="float:right; font-size:14px; font-family:arial">${itemCounts[itemName]} kg</span>`;
         } else {
           container.innerHTML += `
-            <div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">
-              ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>
+            <div style="margin: 10px 0 0 0; width: 100%; font-size:14px; font-family:arial" id="counter-${itemName}">
+              ${itemName} <span style="float:right; font-size:14px; font-family:arial">${itemCounts[itemName]} kg</span>
             </div>`;
         }
 
@@ -209,7 +209,7 @@ function displayData(data) {
           data[itemName]
         );
         if (container) {
-          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%; font-size:14px; font-family:arial" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
           price.innerHTML += lowestPrice * itemCounts[itemName];
         }
 
@@ -222,7 +222,7 @@ function displayData(data) {
       } else {
         itemCounts[itemName] += 5;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+        counterToUpdate.innerHTML = `${itemName} <span style="float:right; font-size:14px; font-family:arial">${itemCounts[itemName]} kg</span>`;
 
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
         price.innerHTML = lowestPrice * itemCounts[itemName];
@@ -410,6 +410,19 @@ $returnHomeButton.addEventListener("click", returnToHome);
 
 function returnToHome() {
   window.location.href = "index.html";
+}
+const $editProducts = document.getElementById("editProducts");
+$editProducts.addEventListener("click", editProducts);
+
+function editProducts() {
+  window.location.href = "editProduct.html";
+}
+
+const $addProduct = document.getElementById("addProduct");
+$addProduct.addEventListener("click", addProduct);
+
+function addProduct() {
+  window.location.href = "addProduct.html";
 }
 
 const buttonAllProducts = document.getElementById("allProducts");
