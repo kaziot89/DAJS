@@ -118,10 +118,10 @@ function displayData(data) {
                   </span>
                   
                   <div id="buttons" style="display: flex; justify-content: right">
-                    <button id="minus-${counter}" style="background-color: pink; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
-                    <button id="plus-${counter}" style="background-color: pink; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
-                    <button id="plus5-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px; " class="itemButton+" data-key="${key}">+5</button>
-                    <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+                    <button id="minus-${counter}" style="background-color: #f8d62d; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
+                    <button id="plus-${counter}" style="background-color: #f8d62d; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
+                    <button id="plus5-${counter}" style="background-color: #f8d62d; border-radius: 5px; width: 32px; height:24px; margin: 0 2px; " class="itemButton+" data-key="${key}">+5</button>
+                    <button id="clear-${counter}" style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
                   </div>
                 </div>`;
         counter++;
