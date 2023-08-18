@@ -42,19 +42,19 @@ button {
 }
 
 #make_l {
-  animation-delay: 0.5s;
+  animation-delay: 0.1s;
 }
 
 #add_p {
-  animation-delay: 0.75s;
+  animation-delay: 0.35s;
 }
 
 #edit_p {
-  animation-delay: 0.8s;
+  animation-delay: 0.4s;
 }
 
 #saved_l {
-  animation-delay: 0.9s;
+  animation-delay: 0.5s;
 }
 @keyframes slideIn {
   0% {
