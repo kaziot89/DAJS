@@ -11,7 +11,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: auto;
 }
 @font-face {
@@ -21,7 +21,7 @@ body {
 #mainContainer {
   display: flex;
   justify-content: space-between;
-  width: 1100px;
+  width: 1300px;
   max-height: 800px;
   height: 90%;
   margin: auto;
@@ -39,7 +39,7 @@ body {
   flex-direction: column;
   border-radius: 10px;
   flex-grow: 1;
-  max-width: 800px;
+  max-width: 900px;
   min-width: 500px;
   min-height: 350px;
   margin: 0 50px 0 50px;
@@ -82,15 +82,18 @@ body {
   margin-right: 10px;
   height: 40px;
   line-height: 50px;
-  font-size: 13px;
+  font-size: 12px;
 }
 #shop1,
-#shop2 {
+#shop2,
+#shop3,
+#shop4,
+#shop5 {
   width: 52px;
   margin-right: 5px;
   line-height: 45px;
 }
-#shop3 {
+#shop6 {
   width: 52px;
   margin-right: 5px;
   line-height: 45px;

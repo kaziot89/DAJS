@@ -54,9 +54,9 @@ function displayData(data) {
         <div id="g" class="${
           item.Category
         }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
-            <span id="item-${key}" style="width:40%; border-bottom: 1px grey solid; font-family:arial; margin-bottom: 3px">
-              <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
-            </span>
+            <input id="item-${key}" style="background-color: white; width: 40%; border-radius: 5px;  height:24px; margin: 0 5px""
+              value="  ${itemName.charAt(0)}${itemName.slice(1)}">
+            
             
             <div id="buttons" style="display: flex; justify-content: right">
               <input id="inputPrice1-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop1" data-key="${key}" value="${
@@ -67,6 +67,15 @@ function displayData(data) {
         }">
               <input id="inputPrice3-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px; " class="inputShop3" data-key="${key}" value="${
           item.Kuchnie_świata !== undefined ? item.Kuchnie_świata : ""
+        }">
+        <input id="inputPrice4-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop4" data-key="${key}" value="${
+          item.Chefs_c !== undefined ? item.Chefs_c : ""
+        }">
+        <input id="inputPrice5-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop5" data-key="${key}" value="${
+          item.Apc !== undefined ? item.Apc : ""
+        }">
+        <input id="inputPrice6-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop6" data-key="${key}" value="${
+          item.Sell_gr !== undefined ? item.Sell_gr : ""
         }">
               <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button><button  style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 5px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
               
@@ -102,6 +111,11 @@ function handleSaveButtonClick(key, event) {
   saveButton.style.transition = "background-color 0.5s ease";
   //   saveButton.style.color = "black";
 
+  // ZROBIĆ EDYCJĘ NAZWY
+  // const inputProductName = document.getElementById(`itemName-${key}`).value;
+
+  //////////////////////////////////////////////////////////
+
   const inputPrice1 = parseFloat(
     document.getElementById(`inputPrice1-${key}`).value
   );
@@ -111,7 +125,21 @@ function handleSaveButtonClick(key, event) {
   const inputPrice3 = parseFloat(
     document.getElementById(`inputPrice3-${key}`).value
   );
+  const inputPrice4 = parseFloat(
+    document.getElementById(`inputPrice4-${key}`).value
+  );
+  const inputPrice5 = parseFloat(
+    document.getElementById(`inputPrice5-${key}`).value
+  );
+  const inputPrice6 = parseFloat(
+    document.getElementById(`inputPrice6-${key}`).value
+  );
+  // ZROBIĆ EDYCJĘ NAZWY
   const updatedPrices = {};
+  // if (!isNaN(inputProductName)) {
+  //   updatedData.AAProduct_name = inputProductName;
+  // }
+  //////////////////////////////////////////////////////////
   if (!isNaN(inputPrice1)) {
     updatedPrices.Farutex = inputPrice1;
   } else {
@@ -127,12 +155,30 @@ function handleSaveButtonClick(key, event) {
   } else {
     updatedPrices.Kuchnie_świata = null; // Set to null if empty
   }
+  if (!isNaN(inputPrice4)) {
+    updatedPrices.Chefs_c = inputPrice4;
+  } else {
+    updatedPrices.Chefs_c = null; // Set to null if empty
+  }
+  if (!isNaN(inputPrice5)) {
+    updatedPrices.Apc = inputPrice5;
+  } else {
+    updatedPrices.Apc = null; // Set to null if empty
+  }
+  if (!isNaN(inputPrice6)) {
+    updatedPrices.Sell_gr = inputPrice6;
+  } else {
+    updatedPrices.Sell_gr = null; // Set to null if empty
+  }
 
   const productRef = ref(database, `products/${key}`);
   update(productRef, updatedPrices, {
     Farutex: inputPrice1,
     Makro: inputPrice2,
     Kuchnie_świata: inputPrice3,
+    Chefs_c: inputPrice4,
+    Apc: inputPrice5,
+    Sell_gr: inputPrice6,
   })
     .then(() => {
       refreshData();

@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 130px;
-  width: 400px;
+  width: 600px;
   margin: 0 auto;
   font-size: 20px;
 }
@@ -47,7 +47,7 @@ body {
 }
 #pricesContainer {
   display: flex;
-  width: 400px;
+  width: 600px;
   justify-content: space-between;
   font-size: 20px;
   /* margin: 0 auto; */
@@ -84,8 +84,11 @@ select {
 }
 #shop1,
 #shop2,
-#shop3 {
-  width: 100%;
+#shop3,
+#shop4,
+#shop5,
+#shop6 {
+  width: 90%;
 }
 #buttons {
   display: flex;
@@ -93,7 +96,7 @@ select {
   justify-content: flex-end;
   flex-wrap: wrap;
   /* height: 200px; */
-  width: 400px;
+  width: 600px;
   /* margin: 0 auto 100px auto; */
   justify-content: space-between;
 }
