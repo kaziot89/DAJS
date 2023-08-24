@@ -69,7 +69,7 @@ function add() {
       Makro: price1 !== "" ? price1 : null,
       Farutex: price2 !== "" ? price2 : null,
       Kuchnie_świata: price3 !== "" ? price3 : null,
-      Chefs_C: price4 !== "" ? price4 : null,
+      Chefs_c: price4 !== "" ? price4 : null,
       Apc: price5 !== "" ? price5 : null,
       Sell_gr: price6 !== "" ? price6 : null,
       Category: category,

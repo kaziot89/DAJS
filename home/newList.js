@@ -33,33 +33,53 @@ get(dataRef)
 let totalSum1 = 0;
 let totalSum2 = 0;
 let totalSum3 = 0;
+let totalSum4 = 0;
+let totalSum5 = 0;
+let totalSum6 = 0;
 let totalCost = 0;
 const shopPrices = {
   Farutex: 0,
   Makro: 0,
   Kuchnie_świata: 0,
+  Chefs_culinar: 0,
+  Apc: 0,
+  Selgros: 0,
 };
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
   const counterContainer1 = document.getElementById("nameContainer2");
   const counterContainer2 = document.getElementById("nameContainer3");
   const counterContainer3 = document.getElementById("nameContainer4");
+  const counterContainer4 = document.getElementById("nameContainer5");
+  const counterContainer5 = document.getElementById("nameContainer6");
+  const counterContainer6 = document.getElementById("nameContainer7");
   const priceContainer1 = document.getElementById("price_paragraph1");
   const priceContainer2 = document.getElementById("price_paragraph2");
   const priceContainer3 = document.getElementById("price_paragraph3");
+  const priceContainer4 = document.getElementById("price_paragraph4");
+  const priceContainer5 = document.getElementById("price_paragraph5");
+  const priceContainer6 = document.getElementById("price_paragraph6");
+
   let html = "";
   let counter = 1;
   let lowestPriceIndex = -1;
 
   function getLowestPrice(item) {
-    const prices = [item.Farutex, item.Kuchnie_świata, item.Makro];
+    const prices = [
+      item.Farutex,
+      item.Kuchnie_świata,
+      item.Makro,
+      item.Chefs_culinar,
+      item.Apc,
+      item.Selgros,
+    ];
     const priceLabels = [
       "Farutex",
       "Kuchnie_świata",
       "Makro",
-      "Chefs_c",
+      "Chefs_culinar",
       "Apc",
-      "Sell_gr",
+      "Selgros",
     ];
     let lowestPrice = Infinity;
     let lowestPriceIndex = -1;
@@ -93,6 +113,30 @@ function displayData(data) {
         return {
           container: counterContainer2,
           price: priceContainer2,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
+        };
+      } else if (lowestPriceIndex === 3) {
+        return {
+          container: counterContainer4,
+          price: priceContainer4,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
+        };
+      } else if (lowestPriceIndex === 4) {
+        return {
+          container: counterContainer5,
+          price: priceContainer5,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
+        };
+      } else if (lowestPriceIndex === 5) {
+        return {
+          container: counterContainer6,
+          price: priceContainer6,
           lowestPrice: lowestPrice,
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
@@ -154,8 +198,6 @@ function displayData(data) {
         itemCounts[itemName]++;
       }
 
-      console.log(itemCounts);
-
       const { container, price, lowestPrice } = getLowestPrice(data[itemName]);
 
       if (container) {
@@ -173,44 +215,63 @@ function displayData(data) {
         const itemPrice = lowestPrice * itemCounts[itemName];
         console.log(itemPrice);
 
-        price.innerHTML = itemPrice;
+        price.textContent = itemPrice; // Ta linia drukuje cenę za drugim kliknięciem
+
+        // Aktualizacja sum cen dla sklepu odpowiadającego kontenerowi
+        if (container === counterContainer1) {
+          totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer1.innerHTML = totalSum1;
+        } else if (container === counterContainer2) {
+          totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer2.innerHTML = totalSum2;
+        } else if (container === counterContainer3) {
+          totalSum3 = selectedProducts.Kuchnie_świata.reduce(
+            (sum, itemName) => {
+              const item = data[itemName];
+              const { lowestPrice } = getLowestPrice(item);
+              return sum + lowestPrice * itemCounts[itemName];
+            },
+            0
+          );
+          priceContainer3.innerHTML = totalSum3;
+        } else if (container === counterContainer4) {
+          totalSum4 = selectedProducts.Chefs_culinar.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer4.innerHTML = totalSum4;
+        } else if (container === counterContainer5) {
+          totalSum5 = selectedProducts.Apc.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer5.innerHTML = totalSum5;
+        } else if (container === counterContainer6) {
+          totalSum6 = selectedProducts.Selgros.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer6.innerHTML = totalSum6;
+        }
+
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${itemPrice} zł`;
+        }
+
+        updateSelectedProducts(itemName);
       }
-
-      //
-      //////////////////////////////////////////////////////////////////////////////
-      ///////// PONIżEJ DODAĆ OPCJĘ POZOSTAŁYCH SKLEPóW - Chefs_c , Apc , Sell_gr //
-      //////////////////////////////////////////////////////////////////////////////
-      //
-
-      if (container === counterContainer1) {
-        totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
-          const item = data[itemName];
-          const { lowestPrice } = getLowestPrice(item);
-          return sum + lowestPrice * itemCounts[itemName];
-        }, 0);
-        priceContainer1.innerHTML = totalSum1;
-      } else if (container === counterContainer2) {
-        totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
-          const item = data[itemName];
-          const { lowestPrice } = getLowestPrice(item);
-          return sum + lowestPrice * itemCounts[itemName];
-        }, 0);
-        priceContainer2.innerHTML = totalSum2;
-      } else if (container === counterContainer3) {
-        totalSum3 = selectedProducts.Kuchnie_świata.reduce((sum, itemName) => {
-          const item = data[itemName];
-          const { lowestPrice } = getLowestPrice(item);
-          return sum + lowestPrice * itemCounts[itemName];
-        }, 0);
-        priceContainer3.innerHTML = totalSum3;
-      }
-
-      const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-      if (lowestPriceElement) {
-        lowestPriceElement.textContent = `${itemPrice} zł`;
-      }
-
-      updateSelectedProducts(itemName);
     });
 
     buttonPlus5.addEventListener("click", function () {
@@ -259,6 +320,12 @@ function displayData(data) {
           totalSum2 -= lowestPrice * itemCounts[itemName];
         } else if (selectedProducts.Kuchnie_świata.includes(itemName)) {
           totalSum3 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Chefs_culinar.includes(itemName)) {
+          totalSum4 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Apc.includes(itemName)) {
+          totalSum5 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Selgros.includes(itemName)) {
+          totalSum6 -= lowestPrice * itemCounts[itemName];
         }
 
         itemCounts[itemName] = 0;
@@ -276,31 +343,6 @@ function displayData(data) {
         localStorage.setItem("itemCounts", JSON.stringify(itemCounts));
       }
     });
-
-    // buttonClear.addEventListener("click", function () {
-    //   if (itemCounts[itemName] > 0) {
-    //     const counterToUpdate = document.getElementById(`counter-${itemName}`);
-    //     const { price, lowestPrice } = getLowestPrice(data[itemName]);
-
-    //     totalCost -= lowestPrice * itemCounts[itemName];
-    //     console.log(totalCost);
-    //     totalSum -= lowestPrice * itemCounts[itemName];
-
-    //     itemCounts[itemName] = 0;
-    //     counterToUpdate.remove();
-
-    //     price.innerHTML = lowestPrice * itemCounts[itemName];
-    //     const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-    //     if (lowestPriceElement) {
-    //       lowestPriceElement.textContent = `${
-    //         lowestPrice * itemCounts[itemName]
-    //       } zł`;
-    //     }
-
-    //     updateSelectedProducts(itemName);
-    //     localStorage.removeItem("itemCounts");
-    //   }
-    // });
 
     buttonMinus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
@@ -336,6 +378,12 @@ function displayData(data) {
     Farutex: [],
     Makro: [],
     Kuchnie_świata: [],
+
+    //// nowe ////////////////////////////
+    Chefs_culinar: [],
+    Apc: [],
+    Selgros: [],
+    //////////////////////////////////////
   };
 
   function updateSelectedProducts(itemName) {
@@ -372,10 +420,28 @@ function displayData(data) {
       const { lowestPrice } = getLowestPrice(item);
       return sum + lowestPrice * itemCounts[itemName];
     }, 0);
+    totalSum4 = selectedProducts.Chefs_culinar.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum5 = selectedProducts.Apc.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum6 = selectedProducts.Selgros.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
 
     priceContainer1.innerHTML = totalSum1.toFixed(2);
     priceContainer2.innerHTML = totalSum2.toFixed(2);
     priceContainer3.innerHTML = totalSum3.toFixed(2);
+    priceContainer4.innerHTML = totalSum4.toFixed(2);
+    priceContainer5.innerHTML = totalSum5.toFixed(2);
+    priceContainer6.innerHTML = totalSum6.toFixed(2);
   }
   function getLowestPriceElement(index) {
     if (index === 0) {
@@ -384,6 +450,8 @@ function displayData(data) {
       return document.getElementById("price_paragraph2");
     } else if (index === 2) {
       return document.getElementById("price_paragraph3");
+    } else if (index === 3) {
+      return document.getElementById("price_paragraph4");
     }
     return null;
   }
@@ -563,10 +631,17 @@ buttonPreserves.addEventListener("click", togglePreserves);
 buttonLoose.addEventListener("click", toggleLoose);
 
 function generateSummary(selectedProducts) {
-  // const summaryContainer = document.getElementById("summaryContainer");
+  const summaryContainer = document.getElementById("summaryContainer");
   let summaryHtml = "<h2>Podsumowanie:</h2>";
 
-  const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
+  const shopOrder = [
+    "Farutex",
+    "Kuchnie_świata",
+    "Makro",
+    "Chefs_culinar",
+    "Apc",
+    "Selgros",
+  ];
 
   for (const shopName of shopOrder) {
     const products = selectedProducts[shopName];
@@ -582,11 +657,16 @@ function generateSummary(selectedProducts) {
     summaryHtml += "<p>Nic nie wybrałeś.</p>";
   }
 
-  summaryHtml += `<p><strong>Razem: ${totalSum1.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Farutex: ${totalSum1.toFixed(2)} zł</strong></p>`;
   summaryHtml += `<p><strong>Makro: ${totalSum2.toFixed(2)} zł</strong></p>`;
   summaryHtml += `<p><strong>Kuchnie świata: ${totalSum3.toFixed(
     2
   )} zł</strong></p>`;
+  summaryHtml += `<p><strong>Chefs_culinar: ${totalSum4.toFixed(
+    2
+  )} zł</strong></p>`;
+  summaryHtml += `<p><strong>Apc agra: ${totalSum5.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Selgros: ${totalSum6.toFixed(2)} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];

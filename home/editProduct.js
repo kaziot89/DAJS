@@ -69,13 +69,13 @@ function displayData(data) {
           item.Kuchnie_świata !== undefined ? item.Kuchnie_świata : ""
         }">
         <input id="inputPrice4-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop4" data-key="${key}" value="${
-          item.Chefs_c !== undefined ? item.Chefs_c : ""
+          item.Chefs_culinar !== undefined ? item.Chefs_culinar : ""
         }">
         <input id="inputPrice5-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop5" data-key="${key}" value="${
           item.Apc !== undefined ? item.Apc : ""
         }">
         <input id="inputPrice6-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop6" data-key="${key}" value="${
-          item.Sell_gr !== undefined ? item.Sell_gr : ""
+          item.Selgros !== undefined ? item.Selgros : ""
         }">
               <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button><button  style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 5px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
               
@@ -156,9 +156,9 @@ function handleSaveButtonClick(key, event) {
     updatedPrices.Kuchnie_świata = null; // Set to null if empty
   }
   if (!isNaN(inputPrice4)) {
-    updatedPrices.Chefs_c = inputPrice4;
+    updatedPrices.Chefs_culinar = inputPrice4;
   } else {
-    updatedPrices.Chefs_c = null; // Set to null if empty
+    updatedPrices.Chefs_culinar = null; // Set to null if empty
   }
   if (!isNaN(inputPrice5)) {
     updatedPrices.Apc = inputPrice5;
@@ -166,9 +166,9 @@ function handleSaveButtonClick(key, event) {
     updatedPrices.Apc = null; // Set to null if empty
   }
   if (!isNaN(inputPrice6)) {
-    updatedPrices.Sell_gr = inputPrice6;
+    updatedPrices.Selgros = inputPrice6;
   } else {
-    updatedPrices.Sell_gr = null; // Set to null if empty
+    updatedPrices.Selgros = null; // Set to null if empty
   }
 
   const productRef = ref(database, `products/${key}`);
@@ -176,9 +176,9 @@ function handleSaveButtonClick(key, event) {
     Farutex: inputPrice1,
     Makro: inputPrice2,
     Kuchnie_świata: inputPrice3,
-    Chefs_c: inputPrice4,
+    Chefs_culinar: inputPrice4,
     Apc: inputPrice5,
-    Sell_gr: inputPrice6,
+    Selgros: inputPrice6,
   })
     .then(() => {
       refreshData();
