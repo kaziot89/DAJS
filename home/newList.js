@@ -45,6 +45,18 @@ const shopPrices = {
   Apc: 0,
   Selgros: 0,
 };
+const selectedProducts = {
+  Farutex: [],
+  Makro: [],
+  Kuchnie_świata: [],
+  Chefs_culinar: [],
+  Apc: [],
+  Selgros: [],
+};
+const storedSelectedProducts = localStorage.getItem("selectedProducts");
+if (storedSelectedProducts) {
+  Object.assign(selectedProducts, JSON.parse(storedSelectedProducts));
+}
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
   const counterContainer1 = document.getElementById("nameContainer2");
@@ -215,9 +227,8 @@ function displayData(data) {
         const itemPrice = lowestPrice * itemCounts[itemName];
         console.log(itemPrice);
 
-        price.textContent = itemPrice; // Ta linia drukuje cenę za drugim kliknięciem
+        price.textContent = itemPrice; // Ta linia drukuje cenę za drugim
 
-        // Aktualizacja sum cen dla sklepu odpowiadającego kontenerowi
         if (container === counterContainer1) {
           totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
             const item = data[itemName];
@@ -378,12 +389,9 @@ function displayData(data) {
     Farutex: [],
     Makro: [],
     Kuchnie_świata: [],
-
-    //// nowe ////////////////////////////
     Chefs_culinar: [],
     Apc: [],
     Selgros: [],
-    //////////////////////////////////////
   };
 
   function updateSelectedProducts(itemName) {
@@ -401,6 +409,10 @@ function displayData(data) {
       }
 
       calculateTotalSums(selectedProducts);
+      localStorage.setItem(
+        "selectedProducts",
+        JSON.stringify(selectedProducts)
+      );
     }
   }
 
@@ -436,6 +448,37 @@ function displayData(data) {
       return sum + lowestPrice * itemCounts[itemName];
     }, 0);
 
+    if (totalSum1 < 500) {
+      priceContainer1.style.color = "red";
+    } else {
+      priceContainer1.style.color = "";
+    }
+    if (totalSum2 < 500) {
+      priceContainer2.style.color = "red";
+    } else {
+      priceContainer2.style.color = "";
+    }
+    if (totalSum3 < 500) {
+      priceContainer3.style.color = "red";
+    } else {
+      priceContainer3.style.color = "";
+    }
+    if (totalSum4 < 500) {
+      priceContainer4.style.color = "red";
+    } else {
+      priceContainer4.style.color = "";
+    }
+    if (totalSum5 < 500) {
+      priceContainer5.style.color = "red";
+    } else {
+      priceContainer5.style.color = "";
+    }
+    if (totalSum6 < 500) {
+      priceContainer6.style.color = "red";
+    } else {
+      priceContainer6.style.color = "";
+    }
+
     priceContainer1.innerHTML = totalSum1.toFixed(2);
     priceContainer2.innerHTML = totalSum2.toFixed(2);
     priceContainer3.innerHTML = totalSum3.toFixed(2);
@@ -452,6 +495,10 @@ function displayData(data) {
       return document.getElementById("price_paragraph3");
     } else if (index === 3) {
       return document.getElementById("price_paragraph4");
+    } else if (index === 4) {
+      return document.getElementById("price_paragraph5");
+    } else if (index === 5) {
+      return document.getElementById("price_paragraph6");
     }
     return null;
   }
@@ -668,6 +715,15 @@ function generateSummary(selectedProducts) {
   summaryHtml += `<p><strong>Apc agra: ${totalSum5.toFixed(2)} zł</strong></p>`;
   summaryHtml += `<p><strong>Selgros: ${totalSum6.toFixed(2)} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
+  localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+  localStorage.setItem("totalSum1", totalSum1);
+  localStorage.setItem("totalSum2", totalSum2);
+  localStorage.setItem("totalSum3", totalSum3);
+  localStorage.setItem("totalSum4", totalSum4);
+  localStorage.setItem("totalSum5", totalSum5);
+  localStorage.setItem("totalSum6", totalSum6);
+  // Clear selectedProducts and itemCounts
+  // localStorage.removeItem("itemCounts");
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
   }

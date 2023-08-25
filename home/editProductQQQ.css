@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+body {
+  background-image: url(Pictures/dajswallpaper.jpg);
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  max-width: 1500px;
+  margin: auto;
+}
+@font-face {
+  font-family: simpsons;
+  src: url(../Simpson/Simpsonfont.ttf) format("truetype");
+}
+#mainContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 1300px;
+  max-height: 800px;
+  height: 90%;
+  margin: auto;
+}
+.productsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 350px;
+}
+#productsContainerList {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  border-radius: 10px;
+  flex-grow: 1;
+  max-width: 900px;
+  min-width: 500px;
+  min-height: 350px;
+  margin: 0 50px 0 50px;
+  border: 2px solid black;
+  background-color: #fffefe;
+  /* margin: 0 40px 0 0; */
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.716);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+#header {
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  /* margin-top: 10px; */
+  top: 0px;
+  height: 50px;
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid black;
+  z-index: 1;
+
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.716);
+  font-family: "simpsons";
+  font-size: 16px;
+  width: 100%;
+}
+#product_name {
+  width: 30%;
+  margin-left: 10px;
+  height: 40px;
+  line-height: 45px;
+}
+#shop_names {
+  display: flex;
+  /* width: 240px; */
+  margin-right: 10px;
+  height: 40px;
+  line-height: 50px;
+  font-size: 12px;
+}
+#shop1,
+#shop2,
+#shop3,
+#shop4,
+#shop5 {
+  width: 52px;
+  margin-right: 5px;
+  line-height: 45px;
+}
+#shop6 {
+  width: 52px;
+  margin-right: 5px;
+  line-height: 45px;
+}
+#empty {
+  width: 122px;
+  height: 40px;
+}
+.productButton,
+.navButtons {
+  width: 150px;
+  height: 45px;
+  margin: 5px 5px;
+  font-family: "simpsons";
+  font-size: 110%;
+  background-color: #f8d62d;
+  border-radius: 10px;
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.716);
+  transition: all 0.1s ease-in-out;
+}
+#btnssummary {
+  order: 1;
+  display: flex;
+  flex-direction: column-reverse;
+  min-height: 400px;
+}
+.navButtons {
+  align-self: flex-end;
+  height: 45px;
+  width: 150px;
+  margin-top: 10px;
+}
+.productButton:hover,
+.navButtons:hover {
+  transform: scale(1.1);
+}
+#productList {
+  /* flex-grow: 1; */
+  margin: 5px 10px 20px 10px;
+  border-radius: 10px;
+  height: 100%;
+}
+.button-success {
+  background-color: rgb(113, 209, 114);
+}

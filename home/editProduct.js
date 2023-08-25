@@ -77,22 +77,65 @@ function displayData(data) {
         <input id="inputPrice6-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop6" data-key="${key}" value="${
           item.Selgros !== undefined ? item.Selgros : ""
         }">
-              <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button><button  style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 5px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+              <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button>
+              <button  id="removeButton-${key}" style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 5px" class="itemButton-" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
               
             </div>
           </div>`;
       }
     }
   }
-
+  function handleRemoveButtonClick(key) {
+    const productRef = ref(database, `products/${key}`);
+    remove(productRef)
+      .then(() => {
+        // Product removed successfully, you can update the UI or perform any other necessary actions.
+        refreshData();
+      })
+      .catch((error) => {
+        console.error("Error removing product:", error);
+      });
+  }
+  function refreshData() {
+    const dataRef = ref(database, "products");
+    get(dataRef)
+      .then((snapshot) => {
+        const data = snapshot.val();
+        // Clear the current dataContainer
+        const dataContainer = document.getElementById("productList");
+        dataContainer.innerHTML = "";
+        // Display the updated data
+        displayData(data);
+      })
+      .catch((error) => {
+        console.error("Error refreshing data:", error);
+      });
+  }
   dataContainer.innerHTML = html;
 
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       const saveButton = document.getElementById(`saveButton-${key}`);
-      saveButton.addEventListener("click", (event) => {
-        const clickedKey = event.target.getAttribute("data-key");
-        handleSaveButtonClick(clickedKey);
+      if (saveButton) {
+        saveButton.addEventListener("click", (event) => {
+          const clickedKey = event.target.getAttribute("data-key");
+          handleSaveButtonClick(clickedKey);
+        });
+      }
+
+      const productList = document.getElementById("productList");
+
+      productList.addEventListener("click", (event) => {
+        const clickedElement = event.target;
+
+        // Check if the clicked element is a removeButton or the icon inside it
+        if (
+          clickedElement.classList.contains("itemButton-") ||
+          clickedElement.closest(".itemButton-") !== null
+        ) {
+          const clickedKey = clickedElement.getAttribute("data-key");
+          handleRemoveButtonClick(clickedKey);
+        }
       });
     }
   }
