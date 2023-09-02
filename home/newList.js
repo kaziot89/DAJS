@@ -176,7 +176,7 @@ function displayData(data) {
         html += `<div id="${counter}" class="${
           item.Category
         }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
-                  <span id="item-${key}" style="width:58%; border-bottom: 1px lightgrey solid; font-family:arial; margin-bottom: 3px">
+                  <span id="item-${key}" style="width:58%; border-bottom: 1px lightgrey solid; font-family:arial; font-size: 12px; margin-bottom: 3px">
                     <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
                   </span>
                   
@@ -536,9 +536,14 @@ function getKeyForItemName(itemCounts, count) {
 const $returnHomeButton = document.getElementById("returnToHome");
 $returnHomeButton.addEventListener("click", returnToHome);
 
+// mobile version return button
+const $returnHomeButton2 = document.getElementById("returnToHome2");
+$returnHomeButton2.addEventListener("click", returnToHome);
+
 function returnToHome() {
   window.location.href = "index.html";
 }
+
 const $editProducts = document.getElementById("editProducts");
 $editProducts.addEventListener("click", editProducts);
 
@@ -551,6 +556,44 @@ $addProduct.addEventListener("click", addProduct);
 
 function addProduct() {
   window.location.href = "addProduct.html";
+}
+
+//button hiding products in mobile
+const $hideProductList = document.getElementById("hideProdShowList");
+$hideProductList.addEventListener("click", hidingProdShowingList);
+
+function hidingProdShowingList() {
+  document.getElementById("productsContainer").style = "display: none";
+  document.getElementById("productsList").style = "display: none";
+  document.getElementById("shoppingListContainer").style.cssText =
+    "display: flex; min-height: 100%; max-width: 95%; margin: 0";
+  document.getElementById("shoppingList").style.cssText =
+    "min-height: 100%; margin: 0";
+
+  // document.getElementsByClassName("shoppingList").style.cssText =
+  //   "display:flex; flex-wrap:wrap; min-height: 90%; min-width: 50px";
+  document.getElementById("nameContainer2").style.cssText =
+    "height:45%; width: 33%; font-size: 10px";
+  document.getElementById("nameContainer3").style.cssText =
+    "height:45%; width: 33%; font-size: 10px";
+  document.getElementById("nameContainer4").style.cssText =
+    "height:45%; width: 33%; font-size: 10px";
+  document.getElementById("nameContainer5").style.cssText =
+    "height:45%; width: 33%; font-size: 10px";
+  document.getElementById("nameContainer6").style.cssText =
+    "height:45%; width: 33%; font-size: 10px";
+  document.getElementById("nameContainer7").style.cssText =
+    "height:45%; width: 33%; font-size: 10px";
+}
+
+const $showProductList = document.getElementById("hideListShowProd");
+$showProductList.addEventListener("click", hidingListShowingProd);
+
+function hidingListShowingProd() {
+  document.getElementById("productsContainer").style = "display: flex";
+  document.getElementById("productsList").style = "display: flex";
+  document.getElementById("shoppingListContainer").style.cssText =
+    "display: none";
 }
 
 const buttonAllProducts = document.getElementById("allProducts");
@@ -677,9 +720,6 @@ buttonFruits.addEventListener("click", toggleFruits);
 buttonFish.addEventListener("click", toggleFish);
 buttonPreserves.addEventListener("click", togglePreserves);
 buttonLoose.addEventListener("click", toggleLoose);
-
-const buttonDivide = document.getElementById("divide");
-buttonDivide.addEventListener("click", divide);
 
 function generateSummary(selectedProducts) {
   const summaryContainer = document.getElementById("summaryContainer");
