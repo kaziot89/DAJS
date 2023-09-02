@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="mainContainer">
-      <div class="productsContainer">
+      <div class="productsContainer" id="productsContainer">
         <button class="productButton" id="allProducts">Wszystko</button>
         <button class="productButton" id="meat">Mieso</button>
         <button class="productButton" id="dairy">Nabial</button>
@@ -21,11 +21,11 @@
         <button class="productButton" id="additional">Dodatkowy</button>
         <button class="productButton" id="additional2">Dodatkowy</button>
       </div>
-      <div class="productsList">
+      <div class="productsList" id="productsList">
         <div id="nameContainer"></div>
       </div>
       <div id="shoppingListContainer">
-        <div class="shoppingList">
+        <div class="shoppingList" id="shoppingList">
           <div id="nameContainer2"><p class="shopName">Farutex</p></div>
           <div id="nameContainer3"><p class="shopName">Makro</p></div>
           <div id="nameContainer4"><p class="shopName">Kuchnie swiata</p></div>
@@ -47,9 +47,19 @@
             Edytuj produkty
           </button>
           <button class="newListButtons" id="addProduct">Dodaj produkt</button>
-          <button class="newListButtons" id="clearList">wyczyść</button>
+          <button class="newListButtons" id="clearList">Wyczyść</button>
           <button class="newListButtons" id="ListSummary">Podsumowanie</button>
         </div>
+      </div>
+      <div id="btnssummaryMobile">
+        <button class="newListButtonsMobile" id="hideProdShowList">
+          Lista
+        </button>
+        <button class="newListButtonsMobile" id="hideListShowProd">
+          Edycja
+        </button>
+        <button class="newListButtonsMobile" id="ListSummary2">Gotowe</button>
+        <button class="newListButtonsMobile" id="returnToHome2">Wstecz</button>
       </div>
     </div>
     <script type="module" src="newList.js"></script>
