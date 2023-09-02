@@ -355,6 +355,31 @@ function displayData(data) {
       }
     });
 
+    // buttonClear.addEventListener("click", function () {
+    //   if (itemCounts[itemName] > 0) {
+    //     const counterToUpdate = document.getElementById(`counter-${itemName}`);
+    //     const { price, lowestPrice } = getLowestPrice(data[itemName]);
+
+    //     totalCost -= lowestPrice * itemCounts[itemName];
+    //     console.log(totalCost);
+    //     totalSum -= lowestPrice * itemCounts[itemName];
+
+    //     itemCounts[itemName] = 0;
+    //     counterToUpdate.remove();
+
+    //     price.innerHTML = lowestPrice * itemCounts[itemName];
+    //     const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+    //     if (lowestPriceElement) {
+    //       lowestPriceElement.textContent = `${
+    //         lowestPrice * itemCounts[itemName]
+    //       } zł`;
+    //     }
+
+    //     updateSelectedProducts(itemName);
+    //     localStorage.removeItem("itemCounts");
+    //   }
+    // });
+
     buttonMinus.addEventListener("click", function () {
       if (!itemCounts[itemName]) {
         itemCounts[itemName] = 0;
