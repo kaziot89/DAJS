@@ -486,6 +486,7 @@ function displayData(data) {
     priceContainer5.innerHTML = totalSum5.toFixed(2);
     priceContainer6.innerHTML = totalSum6.toFixed(2);
   }
+
   function getLowestPriceElement(index) {
     if (index === 0) {
       return document.getElementById("price_paragraph1");
