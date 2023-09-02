@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 130px;
-  width: 400px;
+  width: 600px;
   margin: 0 auto;
   font-size: 20px;
 }
@@ -47,7 +47,7 @@ body {
 }
 #pricesContainer {
   display: flex;
-  width: 400px;
+  width: 600px;
   justify-content: space-between;
   font-size: 20px;
   /* margin: 0 auto; */
@@ -73,30 +73,36 @@ select {
   border: 1px solid black;
 }
 #prodName {
-  margin: 30px 0
+  margin: 30px 0;
 }
 #categorySelector {
   width: 100%;
-  margin: 30px 0
+  margin: 30px 0;
 }
 .shopContainer input {
   width: 100px;
 }
-#shop1, #shop2, #shop3 {
-  width: 100%
+#shop1,
+#shop2,
+#shop3,
+#shop4,
+#shop5,
+#shop6 {
+  width: 90%;
 }
 #buttons {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  flex-wrap: wrap;
   /* height: 200px; */
-  width: 400px;
+  width: 600px;
   /* margin: 0 auto 100px auto; */
   justify-content: space-between;
 }
 button {
   background-color: transparent;
-  height: 40px;
+  height: 45px;
   /* min-height: 40px; */
   width: 47%;
   min-width: 150px;
@@ -104,7 +110,7 @@ button {
   font-family: "simpsons";
   font-size: 120%;
   border-radius: 10px;
-  box-shadow: 15px 15px 20px rgb(0, 0, 0);
+  box-shadow: 15px 15px 20px rgba(0, 0, 0, 0.716);
   margin: 10px 0 10px 0;
   transition: all 0.1s ease-in-out;
 }

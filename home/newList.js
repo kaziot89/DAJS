@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import {
+  get,
   getDatabase,
   ref,
-  get,
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 const firebaseConfig = {
@@ -33,27 +33,66 @@ get(dataRef)
 let totalSum1 = 0;
 let totalSum2 = 0;
 let totalSum3 = 0;
+let totalSum4 = 0;
+let totalSum5 = 0;
+let totalSum6 = 0;
 let totalCost = 0;
 const shopPrices = {
   Farutex: 0,
   Makro: 0,
   Kuchnie_świata: 0,
+  Chefs_culinar: 0,
+  Apc: 0,
+  Selgros: 0,
 };
+const selectedProducts = {
+  Farutex: [],
+  Makro: [],
+  Kuchnie_świata: [],
+  Chefs_culinar: [],
+  Apc: [],
+  Selgros: [],
+};
+const storedSelectedProducts = localStorage.getItem("selectedProducts");
+if (storedSelectedProducts) {
+  Object.assign(selectedProducts, JSON.parse(storedSelectedProducts));
+}
 function displayData(data) {
   const dataContainer = document.getElementById("nameContainer");
   const counterContainer1 = document.getElementById("nameContainer2");
   const counterContainer2 = document.getElementById("nameContainer3");
   const counterContainer3 = document.getElementById("nameContainer4");
+  const counterContainer4 = document.getElementById("nameContainer5");
+  const counterContainer5 = document.getElementById("nameContainer6");
+  const counterContainer6 = document.getElementById("nameContainer7");
   const priceContainer1 = document.getElementById("price_paragraph1");
   const priceContainer2 = document.getElementById("price_paragraph2");
   const priceContainer3 = document.getElementById("price_paragraph3");
+  const priceContainer4 = document.getElementById("price_paragraph4");
+  const priceContainer5 = document.getElementById("price_paragraph5");
+  const priceContainer6 = document.getElementById("price_paragraph6");
+
   let html = "";
   let counter = 1;
   let lowestPriceIndex = -1;
 
   function getLowestPrice(item) {
-    const prices = [item.Farutex, item.Kuchnie_świata, item.Makro];
-    const priceLabels = ["Farutex", "Kuchnie_świata", "Makro"];
+    const prices = [
+      item.Farutex,
+      item.Kuchnie_świata,
+      item.Makro,
+      item.Chefs_culinar,
+      item.Apc,
+      item.Selgros,
+    ];
+    const priceLabels = [
+      "Farutex",
+      "Kuchnie_świata",
+      "Makro",
+      "Chefs_culinar",
+      "Apc",
+      "Selgros",
+    ];
     let lowestPrice = Infinity;
     let lowestPriceIndex = -1;
 
@@ -90,6 +129,30 @@ function displayData(data) {
           lowestPriceIndex: lowestPriceIndex,
           shopName: shopName,
         };
+      } else if (lowestPriceIndex === 3) {
+        return {
+          container: counterContainer4,
+          price: priceContainer4,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
+        };
+      } else if (lowestPriceIndex === 4) {
+        return {
+          container: counterContainer5,
+          price: priceContainer5,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
+        };
+      } else if (lowestPriceIndex === 5) {
+        return {
+          container: counterContainer6,
+          price: priceContainer6,
+          lowestPrice: lowestPrice,
+          lowestPriceIndex: lowestPriceIndex,
+          shopName: shopName,
+        };
       }
     }
 
@@ -118,10 +181,10 @@ function displayData(data) {
                   </span>
                   
                   <div id="buttons" style="display: flex; justify-content: right">
-                    <button id="minus-${counter}" style="background-color: pink; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
-                    <button id="plus-${counter}" style="background-color: pink; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
-                    <button id="plus5-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px; " class="itemButton+" data-key="${key}">+5</button>
-                    <button id="clear-${counter}" style="background-color: pink; border-radius: 5px; width: 32px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+                    <button id="minus-${counter}" style="background-color: #f8d62d; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton-" data-key="${key}">-</button>
+                    <button id="plus-${counter}" style="background-color: #f8d62d; border-radius: 5px; width: 24px; height:24px; margin: 0 2px" class="itemButton+" data-key="${key}">+</button>
+                    <button id="plus5-${counter}" style="background-color: #f8d62d; border-radius: 5px; width: 32px; height:24px; margin: 0 2px; " class="itemButton+" data-key="${key}">+5</button>
+                    <button id="clear-${counter}" style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 2px 0 5px" class="itemButton+" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
                   </div>
                 </div>`;
         counter++;
@@ -147,58 +210,79 @@ function displayData(data) {
         itemCounts[itemName]++;
       }
 
-      console.log(itemCounts);
-
       const { container, price, lowestPrice } = getLowestPrice(data[itemName]);
 
       if (container) {
         const counterElement = document.getElementById(`counter-${itemName}`);
         if (counterElement) {
           counterElement.innerHTML = `
-            ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+            ${itemName} <span style="float:right; font-size:10px; font-family:arial">${itemCounts[itemName]} kg</span>`;
         } else {
           container.innerHTML += `
-            <div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">
-              ${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>
+            <div style="margin: 10px 0 0 0; width: 100%; font-size:10px; font-family:arial" id="counter-${itemName}">
+              ${itemName} <span style="float:right; font-size:10px; font-family:arial">${itemCounts[itemName]} kg</span>
             </div>`;
         }
 
         const itemPrice = lowestPrice * itemCounts[itemName];
         console.log(itemPrice);
 
-        price.innerHTML = itemPrice;
-      }
-      // console.log("Clicked item:", itemName);
-      // console.log("Container:", container);
-      if (container === counterContainer1) {
-        totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
-          const item = data[itemName];
-          const { lowestPrice } = getLowestPrice(item);
-          return sum + lowestPrice * itemCounts[itemName];
-        }, 0);
-        priceContainer1.innerHTML = totalSum1;
-      } else if (container === counterContainer2) {
-        totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
-          const item = data[itemName];
-          const { lowestPrice } = getLowestPrice(item);
-          return sum + lowestPrice * itemCounts[itemName];
-        }, 0);
-        priceContainer2.innerHTML = totalSum2;
-      } else if (container === counterContainer3) {
-        totalSum3 = selectedProducts.Kuchnie_świata.reduce((sum, itemName) => {
-          const item = data[itemName];
-          const { lowestPrice } = getLowestPrice(item);
-          return sum + lowestPrice * itemCounts[itemName];
-        }, 0);
-        priceContainer3.innerHTML = totalSum3;
-      }
+        price.textContent = itemPrice; // Ta linia drukuje cenę za drugim
 
-      const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
-      if (lowestPriceElement) {
-        lowestPriceElement.textContent = `${itemPrice} zł`;
-      }
+        if (container === counterContainer1) {
+          totalSum1 = selectedProducts.Farutex.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer1.innerHTML = totalSum1;
+        } else if (container === counterContainer2) {
+          totalSum2 = selectedProducts.Makro.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer2.innerHTML = totalSum2;
+        } else if (container === counterContainer3) {
+          totalSum3 = selectedProducts.Kuchnie_świata.reduce(
+            (sum, itemName) => {
+              const item = data[itemName];
+              const { lowestPrice } = getLowestPrice(item);
+              return sum + lowestPrice * itemCounts[itemName];
+            },
+            0
+          );
+          priceContainer3.innerHTML = totalSum3;
+        } else if (container === counterContainer4) {
+          totalSum4 = selectedProducts.Chefs_culinar.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer4.innerHTML = totalSum4;
+        } else if (container === counterContainer5) {
+          totalSum5 = selectedProducts.Apc.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer5.innerHTML = totalSum5;
+        } else if (container === counterContainer6) {
+          totalSum6 = selectedProducts.Selgros.reduce((sum, itemName) => {
+            const item = data[itemName];
+            const { lowestPrice } = getLowestPrice(item);
+            return sum + lowestPrice * itemCounts[itemName];
+          }, 0);
+          priceContainer6.innerHTML = totalSum6;
+        }
 
-      updateSelectedProducts(itemName);
+        const lowestPriceElement = getLowestPriceElement(lowestPriceIndex);
+        if (lowestPriceElement) {
+          lowestPriceElement.textContent = `${itemPrice} zł`;
+        }
+
+        updateSelectedProducts(itemName);
+      }
     });
 
     buttonPlus5.addEventListener("click", function () {
@@ -209,7 +293,7 @@ function displayData(data) {
           data[itemName]
         );
         if (container) {
-          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
+          container.innerHTML += `<div style="margin: 10px 0 0 0; width: 100%; font-size:10px; font-family:arial" id="counter-${itemName}">${itemName} <span style="float:right">${itemCounts[itemName]} kg</span></div>`;
           price.innerHTML += lowestPrice * itemCounts[itemName];
         }
 
@@ -222,7 +306,7 @@ function displayData(data) {
       } else {
         itemCounts[itemName] += 5;
         const counterToUpdate = document.getElementById(`counter-${itemName}`);
-        counterToUpdate.innerHTML = `${itemName} <span style="float:right">${itemCounts[itemName]} kg</span>`;
+        counterToUpdate.innerHTML = `${itemName} <span style="float:right; font-size:10px; font-family:arial">${itemCounts[itemName]} kg</span>`;
 
         const { price, lowestPrice } = getLowestPrice(data[itemName]);
         price.innerHTML = lowestPrice * itemCounts[itemName];
@@ -247,6 +331,12 @@ function displayData(data) {
           totalSum2 -= lowestPrice * itemCounts[itemName];
         } else if (selectedProducts.Kuchnie_świata.includes(itemName)) {
           totalSum3 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Chefs_culinar.includes(itemName)) {
+          totalSum4 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Apc.includes(itemName)) {
+          totalSum5 -= lowestPrice * itemCounts[itemName];
+        } else if (selectedProducts.Selgros.includes(itemName)) {
+          totalSum6 -= lowestPrice * itemCounts[itemName];
         }
 
         itemCounts[itemName] = 0;
@@ -324,6 +414,9 @@ function displayData(data) {
     Farutex: [],
     Makro: [],
     Kuchnie_świata: [],
+    Chefs_culinar: [],
+    Apc: [],
+    Selgros: [],
   };
 
   function updateSelectedProducts(itemName) {
@@ -341,6 +434,10 @@ function displayData(data) {
       }
 
       calculateTotalSums(selectedProducts);
+      localStorage.setItem(
+        "selectedProducts",
+        JSON.stringify(selectedProducts)
+      );
     }
   }
 
@@ -360,11 +457,61 @@ function displayData(data) {
       const { lowestPrice } = getLowestPrice(item);
       return sum + lowestPrice * itemCounts[itemName];
     }, 0);
+    totalSum4 = selectedProducts.Chefs_culinar.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum5 = selectedProducts.Apc.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+    totalSum6 = selectedProducts.Selgros.reduce((sum, itemName) => {
+      const item = data[itemName];
+      const { lowestPrice } = getLowestPrice(item);
+      return sum + lowestPrice * itemCounts[itemName];
+    }, 0);
+
+    if (totalSum1 < 500) {
+      priceContainer1.style.color = "red";
+    } else {
+      priceContainer1.style.color = "";
+    }
+    if (totalSum2 < 500) {
+      priceContainer2.style.color = "red";
+    } else {
+      priceContainer2.style.color = "";
+    }
+    if (totalSum3 < 500) {
+      priceContainer3.style.color = "red";
+    } else {
+      priceContainer3.style.color = "";
+    }
+    if (totalSum4 < 500) {
+      priceContainer4.style.color = "red";
+    } else {
+      priceContainer4.style.color = "";
+    }
+    if (totalSum5 < 500) {
+      priceContainer5.style.color = "red";
+    } else {
+      priceContainer5.style.color = "";
+    }
+    if (totalSum6 < 500) {
+      priceContainer6.style.color = "red";
+    } else {
+      priceContainer6.style.color = "";
+    }
 
     priceContainer1.innerHTML = totalSum1.toFixed(2);
     priceContainer2.innerHTML = totalSum2.toFixed(2);
     priceContainer3.innerHTML = totalSum3.toFixed(2);
+    priceContainer4.innerHTML = totalSum4.toFixed(2);
+    priceContainer5.innerHTML = totalSum5.toFixed(2);
+    priceContainer6.innerHTML = totalSum6.toFixed(2);
   }
+
   function getLowestPriceElement(index) {
     if (index === 0) {
       return document.getElementById("price_paragraph1");
@@ -372,6 +519,12 @@ function displayData(data) {
       return document.getElementById("price_paragraph2");
     } else if (index === 2) {
       return document.getElementById("price_paragraph3");
+    } else if (index === 3) {
+      return document.getElementById("price_paragraph4");
+    } else if (index === 4) {
+      return document.getElementById("price_paragraph5");
+    } else if (index === 5) {
+      return document.getElementById("price_paragraph6");
     }
     return null;
   }
@@ -410,6 +563,19 @@ $returnHomeButton.addEventListener("click", returnToHome);
 
 function returnToHome() {
   window.location.href = "index.html";
+}
+const $editProducts = document.getElementById("editProducts");
+$editProducts.addEventListener("click", editProducts);
+
+function editProducts() {
+  window.location.href = "editProduct.html";
+}
+
+const $addProduct = document.getElementById("addProduct");
+$addProduct.addEventListener("click", addProduct);
+
+function addProduct() {
+  window.location.href = "addProduct.html";
 }
 
 const buttonAllProducts = document.getElementById("allProducts");
@@ -538,10 +704,17 @@ buttonPreserves.addEventListener("click", togglePreserves);
 buttonLoose.addEventListener("click", toggleLoose);
 
 function generateSummary(selectedProducts) {
-  // const summaryContainer = document.getElementById("summaryContainer");
+  const summaryContainer = document.getElementById("summaryContainer");
   let summaryHtml = "<h2>Podsumowanie:</h2>";
 
-  const shopOrder = ["Farutex", "Kuchnie_świata", "Makro"];
+  const shopOrder = [
+    "Farutex",
+    "Kuchnie_świata",
+    "Makro",
+    "Chefs_culinar",
+    "Apc",
+    "Selgros",
+  ];
 
   for (const shopName of shopOrder) {
     const products = selectedProducts[shopName];
@@ -557,12 +730,26 @@ function generateSummary(selectedProducts) {
     summaryHtml += "<p>Nic nie wybrałeś.</p>";
   }
 
-  summaryHtml += `<p><strong>Razem: ${totalSum1.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Farutex: ${totalSum1.toFixed(2)} zł</strong></p>`;
   summaryHtml += `<p><strong>Makro: ${totalSum2.toFixed(2)} zł</strong></p>`;
   summaryHtml += `<p><strong>Kuchnie świata: ${totalSum3.toFixed(
     2
   )} zł</strong></p>`;
+  summaryHtml += `<p><strong>Chefs_culinar: ${totalSum4.toFixed(
+    2
+  )} zł</strong></p>`;
+  summaryHtml += `<p><strong>Apc agra: ${totalSum5.toFixed(2)} zł</strong></p>`;
+  summaryHtml += `<p><strong>Selgros: ${totalSum6.toFixed(2)} zł</strong></p>`;
   localStorage.setItem("summaryHtml", summaryHtml);
+  localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+  localStorage.setItem("totalSum1", totalSum1);
+  localStorage.setItem("totalSum2", totalSum2);
+  localStorage.setItem("totalSum3", totalSum3);
+  localStorage.setItem("totalSum4", totalSum4);
+  localStorage.setItem("totalSum5", totalSum5);
+  localStorage.setItem("totalSum6", totalSum6);
+  // Clear selectedProducts and itemCounts
+  // localStorage.removeItem("itemCounts");
   for (const shopName of shopOrder) {
     selectedProducts[shopName] = [];
   }

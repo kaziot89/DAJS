@@ -45,11 +45,22 @@ function add() {
   let price1 = document.getElementById("shop1").value;
   let price2 = document.getElementById("shop2").value;
   let price3 = document.getElementById("shop3").value;
+  let price4 = document.getElementById("shop4").value;
+  let price5 = document.getElementById("shop5").value;
+  let price6 = document.getElementById("shop6").value;
   let category = document
     .getElementById("categorySelector")
     .value.toLowerCase();
 
-  if (name !== "" && (price1 !== "" || price2 !== "" || price3 !== "")) {
+  if (
+    name !== "" &&
+    (price1 !== "" ||
+      price2 !== "" ||
+      price3 !== "" ||
+      price4 !== "" ||
+      price5 !== "" ||
+      price6 !== "")
+  ) {
     const newProductRef = push(productsRef);
     const newProductId = newProductRef.key;
 
@@ -58,6 +69,9 @@ function add() {
       Makro: price1 !== "" ? price1 : null,
       Farutex: price2 !== "" ? price2 : null,
       Kuchnie_świata: price3 !== "" ? price3 : null,
+      Chefs_c: price4 !== "" ? price4 : null,
+      Apc: price5 !== "" ? price5 : null,
+      Sell_gr: price6 !== "" ? price6 : null,
       Category: category,
     };
 
@@ -74,3 +88,15 @@ saveBtn.addEventListener("click", add);
 returnBtn.addEventListener("click", function back() {
   window.location.href = "index.html";
 });
+const $newListButton = document.getElementById("newList");
+$newListButton.addEventListener("click", newList);
+
+function newList() {
+  window.location.href = "newList.html";
+}
+const $editProducts = document.getElementById("editProducts");
+$editProducts.addEventListener("click", editProducts);
+
+function editProducts() {
+  window.location.href = "editProduct.html";
+}

@@ -54,9 +54,9 @@ function displayData(data) {
         <div id="g" class="${
           item.Category
         }" style="margin: 10px 0 0 0;  display: flex; justify-content: space-between;">
-            <span id="item-${key}" style="width:40%; border-bottom: 1px grey solid; font-family:arial; margin-bottom: 3px">
-              <span >${itemName.charAt(0)}</span>${itemName.slice(1)}
-            </span>
+            <input id="item-${key}" style="background-color: white; width: 40%; border-radius: 5px;  height:24px; margin: 0 5px""
+              value="  ${itemName.charAt(0)}${itemName.slice(1)}">
+            
             
             <div id="buttons" style="display: flex; justify-content: right">
               <input id="inputPrice1-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop1" data-key="${key}" value="${
@@ -68,21 +68,74 @@ function displayData(data) {
               <input id="inputPrice3-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px; " class="inputShop3" data-key="${key}" value="${
           item.Kuchnie_świata !== undefined ? item.Kuchnie_świata : ""
         }">
+        <input id="inputPrice4-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop4" data-key="${key}" value="${
+          item.Chefs_culinar !== undefined ? item.Chefs_culinar : ""
+        }">
+        <input id="inputPrice5-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop5" data-key="${key}" value="${
+          item.Apc !== undefined ? item.Apc : ""
+        }">
+        <input id="inputPrice6-${key}" style="background-color: white; border-radius: 5px; width: 48px; height:24px; margin: 0 5px" class="inputShop6" data-key="${key}" value="${
+          item.Selgros !== undefined ? item.Selgros : ""
+        }">
               <button id="saveButton-${key}" style="background-color: #f8d62d; border-radius: 5px; width: 70px; height:24px; margin: 0 2px 0 10px" class="itemButton+" data-key="${key}">Zapisz</button>
+              <button  id="removeButton-${key}" style="background-color: #ff2121d1; border-radius: 5px; width: 32px; height:24px; margin: 0 5px" class="itemButton-" data-key="${key}"><img src="trashIcon.png" style="max-height: 18px;  "alt=""></button>
+              
             </div>
           </div>`;
       }
     }
   }
-
+  function handleRemoveButtonClick(key) {
+    const productRef = ref(database, `products/${key}`);
+    remove(productRef)
+      .then(() => {
+        // Product removed successfully, you can update the UI or perform any other necessary actions.
+        refreshData();
+      })
+      .catch((error) => {
+        console.error("Error removing product:", error);
+      });
+  }
+  function refreshData() {
+    const dataRef = ref(database, "products");
+    get(dataRef)
+      .then((snapshot) => {
+        const data = snapshot.val();
+        // Clear the current dataContainer
+        const dataContainer = document.getElementById("productList");
+        dataContainer.innerHTML = "";
+        // Display the updated data
+        displayData(data);
+      })
+      .catch((error) => {
+        console.error("Error refreshing data:", error);
+      });
+  }
   dataContainer.innerHTML = html;
 
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       const saveButton = document.getElementById(`saveButton-${key}`);
-      saveButton.addEventListener("click", (event) => {
-        const clickedKey = event.target.getAttribute("data-key");
-        handleSaveButtonClick(clickedKey);
+      if (saveButton) {
+        saveButton.addEventListener("click", (event) => {
+          const clickedKey = event.target.getAttribute("data-key");
+          handleSaveButtonClick(clickedKey);
+        });
+      }
+
+      const productList = document.getElementById("productList");
+
+      productList.addEventListener("click", (event) => {
+        const clickedElement = event.target;
+
+        // Check if the clicked element is a removeButton or the icon inside it
+        if (
+          clickedElement.classList.contains("itemButton-") ||
+          clickedElement.closest(".itemButton-") !== null
+        ) {
+          const clickedKey = clickedElement.getAttribute("data-key");
+          handleRemoveButtonClick(clickedKey);
+        }
       });
     }
   }
@@ -101,6 +154,11 @@ function handleSaveButtonClick(key, event) {
   saveButton.style.transition = "background-color 0.5s ease";
   //   saveButton.style.color = "black";
 
+  // ZROBIĆ EDYCJĘ NAZWY
+  // const inputProductName = document.getElementById(`itemName-${key}`).value;
+
+  //////////////////////////////////////////////////////////
+
   const inputPrice1 = parseFloat(
     document.getElementById(`inputPrice1-${key}`).value
   );
@@ -110,7 +168,21 @@ function handleSaveButtonClick(key, event) {
   const inputPrice3 = parseFloat(
     document.getElementById(`inputPrice3-${key}`).value
   );
+  const inputPrice4 = parseFloat(
+    document.getElementById(`inputPrice4-${key}`).value
+  );
+  const inputPrice5 = parseFloat(
+    document.getElementById(`inputPrice5-${key}`).value
+  );
+  const inputPrice6 = parseFloat(
+    document.getElementById(`inputPrice6-${key}`).value
+  );
+  // ZROBIĆ EDYCJĘ NAZWY
   const updatedPrices = {};
+  // if (!isNaN(inputProductName)) {
+  //   updatedData.AAProduct_name = inputProductName;
+  // }
+  //////////////////////////////////////////////////////////
   if (!isNaN(inputPrice1)) {
     updatedPrices.Farutex = inputPrice1;
   } else {
@@ -126,12 +198,30 @@ function handleSaveButtonClick(key, event) {
   } else {
     updatedPrices.Kuchnie_świata = null; // Set to null if empty
   }
+  if (!isNaN(inputPrice4)) {
+    updatedPrices.Chefs_culinar = inputPrice4;
+  } else {
+    updatedPrices.Chefs_culinar = null; // Set to null if empty
+  }
+  if (!isNaN(inputPrice5)) {
+    updatedPrices.Apc = inputPrice5;
+  } else {
+    updatedPrices.Apc = null; // Set to null if empty
+  }
+  if (!isNaN(inputPrice6)) {
+    updatedPrices.Selgros = inputPrice6;
+  } else {
+    updatedPrices.Selgros = null; // Set to null if empty
+  }
 
   const productRef = ref(database, `products/${key}`);
   update(productRef, updatedPrices, {
     Farutex: inputPrice1,
     Makro: inputPrice2,
     Kuchnie_świata: inputPrice3,
+    Chefs_culinar: inputPrice4,
+    Apc: inputPrice5,
+    Selgros: inputPrice6,
   })
     .then(() => {
       refreshData();
@@ -140,7 +230,7 @@ function handleSaveButtonClick(key, event) {
         saveButton.textContent = originalButtonText;
         saveButton.style.backgroundColor = originalButtonBackgroundColor;
         saveButton.style.color = ""; // Reset color to default
-      }, 1000);
+      }, 2000);
     })
     .catch((error) => {
       // ... (similar code for error handling)
@@ -162,6 +252,20 @@ $returnHomeButton.addEventListener("click", returnToHome);
 
 function returnToHome() {
   window.location.href = "index.html";
+}
+
+const $newListButton = document.getElementById("newList");
+$newListButton.addEventListener("click", newList);
+
+function newList() {
+  window.location.href = "newList.html";
+}
+
+const $addProduct = document.getElementById("addProduct");
+$addProduct.addEventListener("click", addProduct);
+
+function addProduct() {
+  window.location.href = "addProduct.html";
 }
 
 const buttonAllProducts = document.getElementById("allProducts");

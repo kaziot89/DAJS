@@ -9,6 +9,7 @@ $editPricesButton.addEventListener("click", editPrices);
 $savedListsButton.addEventListener("click", showSavedLists);
 
 function createList() {
+  localStorage.clear();
   window.location.href = "newList.html";
 }
 
