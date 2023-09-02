@@ -678,6 +678,9 @@ buttonFish.addEventListener("click", toggleFish);
 buttonPreserves.addEventListener("click", togglePreserves);
 buttonLoose.addEventListener("click", toggleLoose);
 
+const buttonDivide = document.getElementById("divide");
+buttonDivide.addEventListener("click", divide);
+
 function generateSummary(selectedProducts) {
   const summaryContainer = document.getElementById("summaryContainer");
   let summaryHtml = "<h2>Podsumowanie:</h2>";

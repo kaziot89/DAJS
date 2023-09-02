@@ -4,6 +4,10 @@ const storedItemCounts = JSON.parse(localStorage.getItem("itemCounts"));
 const summaryContainer = document.getElementById("summaryContainer");
 summaryContainer.innerHTML = summaryHtml;
 
+const backButton = document.getElementById("backButton");
+backButton.addEventListener("click", () => {
+  window.location.href = "newList.html";
+});
 const printButton = document.getElementById("printButton");
 printButton.addEventListener("click", () => {
   window.print();
